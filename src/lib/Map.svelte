@@ -2,50 +2,38 @@
   import { onMount, onDestroy } from "svelte";
 
   import UserLocation from './UserLocation.svelte';
+  import Users from './Users.svelte';
+
+  import { targetLocation } from '$lib/store';
+
+  import { calculateDistance } from '$lib/utilities/calculations';
 
   let map: google.maps.Map;;
-  export let targetLocation;
   let apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-  let userMarker;
-  let watchId;
+  let targetMarker: google.maps.Marker;
+  let userMarker: google.maps.Marker;
+  let watchId: number;
   let userIsNearTarget = false;
-
-  function toRadians(degrees) {
-    return degrees * (Math.PI / 180);
-  }
-
-  function calculateDistance(lat1, lng1, lat2, lng2) {
-    const R = 6371e3; // metres
-    const φ1 = toRadians(lat1);
-    const φ2 = toRadians(lat2);
-    const Δφ = toRadians(lat2 - lat1);
-    const Δλ = toRadians(lng2 - lng1);
-
-    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-              Math.cos(φ1) * Math.cos(φ2) *
-              Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    return R * c;
-  }
+  let distance: number;
 
   onMount(() => {
     loadScript(`https://maps.googleapis.com/maps/api/js?key=${apiKey}`, () => {
       map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-        center: targetLocation,
+        center: $targetLocation,
         zoom: 14,
+        mapTypeControl: false,
+        fullscreenControl: false,
       });
 
-      new google.maps.Marker({
-        position: targetLocation,
+      targetMarker = new google.maps.Marker({
+        position: $targetLocation,
         map,
       });
 
       if (navigator.geolocation) {
       watchId = navigator.geolocation.watchPosition((position) => {
         let userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
-        let distance = calculateDistance(targetLocation.lat, targetLocation.lng, userLocation.lat, userLocation.lng);
+        distance = calculateDistance($targetLocation.lat, $targetLocation.lng, userLocation.lat, userLocation.lng);
 
         // Remove the previous user marker, if it exists
         if (userMarker) {
@@ -80,6 +68,15 @@
     });
   })
 
+  $: if (targetMarker && map) {
+    targetMarker.setMap(null); // remove the old marker
+    targetMarker = new google.maps.Marker({ // create a new marker
+      position: $targetLocation,
+      map,
+    });
+    map.setCenter($targetLocation); // center the map on the new location
+  }
+
   onDestroy(() => {
     if (watchId) {
       navigator.geolocation.clearWatch(watchId);
@@ -100,4 +97,6 @@
 </script>
 
 <div id="map" class="h-screen w-screen"></div>
+<Users />
 <UserLocation visible={userIsNearTarget} />
+<div class="fixed top-0 right-0 m-8 p-4 bg-white leading-4">{Math.floor(distance)} meters</div>

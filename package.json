@@ -12,6 +12,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.27.4",
+		"@types/google.maps": "^3.54.10",
 		"autoprefixer": "^10.4.16",
 		"daisyui": "^4.4.19",
 		"postcss": "^8.4.32",
