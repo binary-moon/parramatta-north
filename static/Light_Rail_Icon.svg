@@ -1,0 +1,25 @@
+<svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Light Rail Icon" filter="url(#filter0_d_1024_2422)">
+<g id="Group">
+<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M25.9999 0C39.7978 0 51 11.2021 51 24.9999C51 38.7979 39.7978 50 25.9999 50C12.202 50 1 38.7979 1 24.9999C1 11.2021 12.202 0 25.9999 0ZM25.9999 4.10814C37.5304 4.10814 46.8918 13.4694 46.8918 24.9999C46.8918 36.5306 37.5304 45.8919 25.9999 45.8919C14.4695 45.8919 5.10824 36.5306 5.10824 24.9999C5.10824 13.4694 14.4695 4.10814 25.9999 4.10814Z" fill="white"/>
+</g>
+<g id="Group_2">
+<path id="Vector_2" d="M26.1107 45.8977C37.7428 45.8977 47.1725 36.5251 47.1725 24.9635C47.1725 13.4018 37.7428 4.02924 26.1107 4.02924C14.4785 4.02924 5.04883 13.4018 5.04883 24.9635C5.04883 36.5251 14.4785 45.8977 26.1107 45.8977Z" fill="#FF2400"/>
+</g>
+<g id="Group_3">
+<path id="L" d="M18.6816 9.3992H24.2543V31.2788H37.4624V36.0745H18.6816V9.3992Z" fill="white"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_1024_2422" x="0" y="0" width="52" height="52" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="0.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1024_2422"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1024_2422" result="shape"/>
+</filter>
+</defs>
+</svg>

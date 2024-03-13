@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "icon": "/Bus_Icon.svg",
+    "title": "Bus",
+    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
+    "linkText": "See bus schedules",
+    "href": "/"
+  },
+  {
+    "id": 2,
+    "icon": "/Light_Rail_Icon.svg",
+    "title": "Light Rail",
+    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
+    "linkText": "See light rail schedules",
+    "href": "/"
+  },
+  {
+    "id": 3,
+    "icon": "/Train_Icon.svg",
+    "title": "Train",
+    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
+    "linkText": "See train schedules",
+    "href": "/"
+  },
+  {
+    "id": 4,
+    "icon": "/Ferry_Icon.svg",
+    "title": "Ferry",
+    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
+    "linkText": "See ferry schedules",
+    "href": "/"
+  },
+  {
+    "id": 5,
+    "icon": "/Walking_Icon.svg",
+    "title": "Walking",
+    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
+    "linkText": "See walking paths",
+    "href": "/"
+  },
+  {
+    "id": 6,
+    "icon": "/Cycling_Icon.svg",
+    "title": "Cycling",
+    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
+    "linkText": "See cycleways",
+    "href": "/"
+  },
+  {
+    "id": 7,
+    "icon": "/Driving_Icon.svg",
+    "title": "Driving",
+    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
+    "linkText": "See parking stations",
+    "href": "/"
+  }
+]

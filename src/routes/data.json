@@ -1,0 +1,102 @@
+[
+  {
+    "componentType": "PrimaryPromo",
+    "props": {
+      "tag": "Tours",
+      "title": "Architectural Explorations",
+      "subtitle": "5 Places - 30 mins",
+      "image": "https://placehold.co/1080x1080/black/333",
+      "href": "/tours/architectural-explorations"
+    }
+  },
+  {
+    "componentType": "WhatsOnHome",
+    "props": {
+      "title": "What's on",
+      "moreLink": "/whats-on",
+      "items": [
+        {
+          "tag": "Special Event",
+          "title": "WS24",
+          "subtitle": "16 - 24 Mar 2024",
+          "image": "https://placehold.co/760x640/black/333",
+          "href": "/whats-on/ws24"
+        },
+        {
+          "tag": "Tours",
+          "title": "Heritage 2024",
+          "subtitle": "18 May 2024",
+          "image": "https://placehold.co/760x640/black/333",
+          "href": "/whats-on/Heritage-2024"
+        },
+        {
+          "tag": "Special Event",
+          "title": "WS24",
+          "subtitle": "16 - 24 Mar 2024",
+          "image": "https://placehold.co/760x640/black/333",
+          "href": "/whats-on/ws24"
+        },
+        {
+          "tag": "Tours",
+          "title": "Heritage 2024",
+          "subtitle": "18 May 2024",
+          "image": "https://placehold.co/760x640/black/333",
+          "href": "/whats-on/Heritage-2024"
+        }
+      ]
+    }
+  },
+  {
+    "componentType": "LatestNewsHome",
+    "props": {
+      "title": "Latest News",
+      "moreLink": "/news",
+      "items": [
+        {
+          "date": "29 Nov 2023",
+          "title":"Discover Parramatta’s connected past and emerging future",
+          "description": "Discover Parramatta North's remarkable history on Heritage Day - Saturday 24 May 2024 - with tours, fun family activities, live music, food and more.",
+          "image": "https://placehold.co/396x297/black/333",
+          "href": "/news/discover-parramattas-connected-past-and-emerging-future"
+        },
+        {
+          "date": "29 Nov 2023",
+          "title":"Seeding grassroots for ‘The Green’ at Parramatta North",
+          "description": "Today 'The Green' opened at Parramatta North, a revitalised 8,000 square metre sports ground for the local community.",
+          "image": "https://placehold.co/396x297/black/333",
+          "href": "/news/seeding-grassroots-for-the-green-at-parramatta-north"
+        }
+      ]
+    }
+  },
+  {
+    "componentType": "ToursHome",
+    "props": {
+      "title": "Tours",
+      "moreLink": "/tours",
+      "items": [
+        {
+          "tag": "Art & Culture",
+          "title": "Future Vision",
+          "subtitle": "5 Places - 30 mins",
+          "image": "https://placehold.co/760x640/black/333",
+          "href": "/tours/future-vision"
+        },
+        {
+          "tag": "Architecture",
+          "title": "Architectural Explorations",
+          "subtitle": "5 Places - 30 mins",
+          "image": "https://placehold.co/760x640/black/333",
+          "href": "/tours/architectural-explorations"
+        },
+        {
+          "tag": "Art & Culture",
+          "title": "Future Vision",
+          "subtitle": "5 Places - 30 mins",
+          "image": "https://placehold.co/760x640/black/333",
+          "href": "/tours/future-vision"
+        }
+      ]
+    }
+  }
+]

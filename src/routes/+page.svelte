@@ -1,10 +1,25 @@
 <script>
-  import GoogleMaps from '../lib/Map.svelte';
+  import { onMount } from 'svelte';
+  import data from './data.json';
 
-  let lat = -33.73994;
-  let lng = 151.04781;
-  let targetLocation = { lat, lng };
+  let components = {};
 
+  // Dynamically import components based on the componentType
+  onMount(async () => {
+    const imports = data.map(item => {
+      const componentType = item.componentType;
+      return import(`$lib/${componentType}.svelte`)
+        .then(comp => {
+          components[componentType] = comp.default;
+        });
+    });
+    await Promise.all(imports);
+  });
 </script>
 
-<GoogleMaps {targetLocation} />
+<!-- Render the dynamically imported components -->
+{#each data as { componentType, props }}
+  {#if components[componentType]}
+    <svelte:component this={components[componentType]} {...props} />
+  {/if}
+{/each}

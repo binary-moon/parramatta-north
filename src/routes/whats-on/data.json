@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "tag": "Special Events",
+    "title": "WS24",
+    "subtitle": "18-24 Mar 2024",
+    "image": "https://placehold.co/1080x1080/black/333",
+    "href": "/whats-on/ws24"
+  },
+  {
+    "id": 2,
+    "tag": "Special Events",
+    "title": "Heritage Day 2024",
+    "subtitle": "18-24 Mar 2024",
+    "image": "https://placehold.co/1080x1080/black/333",
+    "href": "/whats-on/heritage-day-2024"
+  },
+  {
+    "id": 3,
+    "tag": "Special Events",
+    "title": "Easter Egg Hunt",
+    "subtitle": "18-24 Mar 2024",
+    "image": "https://placehold.co/1080x1080/black/333",
+    "href": "/whats-on/easter-egg-hunt"
+  },
+  {
+    "id": 4,
+    "tag": "Special Events",
+    "title": "Event Name Goes Here",
+    "subtitle": "18-24 Mar 2024",
+    "image": "https://placehold.co/1080x1080/black/333",
+    "href": "/whats-on/ws24-1"
+  }
+]

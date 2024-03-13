@@ -8,7 +8,7 @@
 
   import { calculateDistance } from '$lib/utilities/calculations';
 
-  let map: google.maps.Map;;
+  let map: google.maps.Map;
   let apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   let targetMarker: google.maps.Marker;
   let userMarker: google.maps.Marker;

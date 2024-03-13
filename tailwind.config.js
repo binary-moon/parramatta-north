@@ -4,6 +4,18 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"), require("@tailwindcss/typography")],
+  daisyui: {
+    themes: [
+      {
+        "customTheme": {
+          "primary": "#F3631B",
+          "accent": "#002664",
+          "neutral": "#22272B",
+          "neutral-content": "#F2F2F2",
+        }
+      }
+    ]
+  }
 }
 
