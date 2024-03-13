@@ -10,17 +10,22 @@
   const { pageData } = data;
   console.log({pageData})
 
-  let isTourStarted = false;
+  let isTourStarted = true;
 
   const startTour = () => {
     isTourStarted = true;
+  }
+
+  const finishTour = () => {
+    isTourStarted = false;
   }
 </script>
 
 {#if pageData}
   {#if isTourStarted}
     <div class="flex flex-col w-full h-full absolute top-0 left-0 bg-white z-40 overflow-hidden">
-      <Tour tourSteps={pageData.tourSteps} title={pageData.title}/>
+      <Tour tourSteps={pageData.tourSteps} title={pageData.title} defaultLocation={pageData.defaultLocation}/>
+      <button class="absolute top-10 right-6" on:click={finishTour}><img src="/Close_Button.png" alt="Close button" /></button>
     </div>
   {:else}
     <div class="flex flex-col justify-end w-full h-full absolute top-0 left-0 bg-cover bg-center text-white" style="background-image: url('{pageData.detailImage}');">

@@ -10,6 +10,10 @@
     "detailImage": "https://placehold.co/2000x2000/black/333",
     "detailTags": ["Architecture", "Interactive", "Wheelchair Accessible"],
     "description": "Proin in ante ac libero vesti bulum condim entum id pellentesque purus. Sed condim entu m pulvinar metus, in eleifend neque cursus eget. Donec consectetur leo ac dictum auctor.",
+    "defaultLocation": {
+      "lat": -33.74039964993525,
+      "lng": 151.04472093467552
+    },
     "tourSteps": [
       {
         "id": 1,
@@ -84,6 +88,10 @@
     "detailImage": "https://placehold.co/2000x2000/black/333",
     "detailTags": ["Architecture", "Interactive", "Wheelchair Accessible"],
     "description": "Proin in ante ac libero vesti bulum condim entum id pellentesque purus. Sed condim entu m pulvinar metus, in eleifend neque cursus eget. Donec consectetur leo ac dictum auctor.",
+    "defaultLocation": {
+      "lat": -33.8005663,
+      "lng": 151.0000324
+    },
     "tourSteps": [
       {
         "id": 1,
@@ -308,6 +316,10 @@
     "detailImage": "https://placehold.co/2000x2000/black/333",
     "detailTags": ["Architecture", "Interactive", "Wheelchair Accessible"],
     "description": "Proin in ante ac libero vesti bulum condim entum id pellentesque purus. Sed condim entu m pulvinar metus, in eleifend neque cursus eget. Donec consectetur leo ac dictum auctor.",
+    "defaultLocation": {
+      "lat": -34.03932225863922,
+      "lng": 151.08408297047157
+    },
     "tourSteps": [
       {
         "id": 1,
@@ -382,6 +394,10 @@
     "detailImage": "https://placehold.co/2000x2000/black/333",
     "detailTags": ["Architecture", "Interactive", "Wheelchair Accessible"],
     "description": "Proin in ante ac libero vesti bulum condim entum id pellentesque purus. Sed condim entu m pulvinar metus, in eleifend neque cursus eget. Donec consectetur leo ac dictum auctor.",
+    "defaultLocation": {
+      "lat": -33.74039964993525,
+      "lng": 151.04472093467552
+    },
     "tourSteps": [
       {
         "id": 1,
@@ -441,6 +457,10 @@
     "detailImage": "https://placehold.co/2000x2000/black/333",
     "detailTags": ["Architecture", "Interactive", "Wheelchair Accessible"],
     "description": "Proin in ante ac libero vesti bulum condim entum id pellentesque purus. Sed condim entu m pulvinar metus, in eleifend neque cursus eget. Donec consectetur leo ac dictum auctor.",
+    "defaultLocation": {
+      "lat": -33.74039964993525,
+      "lng": 151.04472093467552
+    },
     "tourSteps": [
       {
         "id": 1,
@@ -500,6 +520,10 @@
     "detailImage": "https://placehold.co/2000x2000/black/333",
     "detailTags": ["Architecture", "Interactive", "Wheelchair Accessible"],
     "description": "Proin in ante ac libero vesti bulum condim entum id pellentesque purus. Sed condim entu m pulvinar metus, in eleifend neque cursus eget. Donec consectetur leo ac dictum auctor.",
+    "defaultLocation": {
+      "lat": -33.74039964993525,
+      "lng": 151.04472093467552
+    },
     "tourSteps": [
       {
         "id": 1,
@@ -559,6 +583,10 @@
     "detailImage": "https://placehold.co/2000x2000/black/333",
     "detailTags": ["Architecture", "Interactive", "Wheelchair Accessible"],
     "description": "Proin in ante ac libero vesti bulum condim entum id pellentesque purus. Sed condim entu m pulvinar metus, in eleifend neque cursus eget. Donec consectetur leo ac dictum auctor.",
+    "defaultLocation": {
+      "lat": -33.74039964993525,
+      "lng": 151.04472093467552
+    },
     "tourSteps": [
       {
         "id": 1,

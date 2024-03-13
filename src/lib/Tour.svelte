@@ -12,7 +12,6 @@
   let directionsRenderer: google.maps.DirectionsRenderer;
   let userPathDirectionsRenderer: google.maps.DirectionsRenderer;
   let apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-  let defaultLocation: ILatLong = { lat: -33.74069085195705, lng: 151.0442223807315 };
   let activeStep: number = 1;
   let watchId: number | null;
   let UserMarker: any;
@@ -22,6 +21,7 @@
 
   export let tourSteps: ITourStep[] = [];
   export let title: string = '';
+  export let defaultLocation: ILatLong = { lat: -33.74069085195705, lng: 151.0442223807315 };
 
   let markers: google.maps.Marker[] = [];
 
@@ -172,7 +172,7 @@
       watchId = null;
     }
     if (userMarker) {
-      userMarker.remove();
+      userMarker.onRemove();
       userMarker = null;
     }
     if (window.DeviceOrientationEvent) {
