@@ -7,6 +7,7 @@
   import Footer from '../lib/Footer.svelte';
   import QuickFind from "../lib/QuickFind.svelte";
   console.log($page)
+  console.log('Development build')
 </script>
 
 <div class="text-neutral">
