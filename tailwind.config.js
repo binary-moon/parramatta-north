@@ -8,26 +8,13 @@ export default {
   daisyui: {
     themes: [
       {
-        "customTheme": {
-          "primary": "#F3631B",
-          "accent": "#002664",
-          "neutral": "#22272B",
-          "neutral-content": "#F2F2F2",
-        },
-        "customTheme": {
-          "primary": "#F3631B",
-          "accent": "#002664",
-          "neutral": "#22272B",
-          "neutral-content": "#F2F2F2",
-        },
-        "customTheme": {
+        "parramattaNorth": {
           "primary": "#F3631B",
           "accent": "#002664",
           "neutral": "#22272B",
           "neutral-content": "#F2F2F2",
         }
       }
-    ],
-    darkTheme: "customTheme",
+    ]
   }
 }
