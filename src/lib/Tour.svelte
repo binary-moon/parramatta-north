@@ -208,6 +208,7 @@
           zIndex: 1,
         },
         suppressMarkers: true, // This will remove the default A, B, C markers
+        preserveViewport: true,
       });
       directionsRenderer.setMap(map);
 
@@ -234,6 +235,7 @@
         ],
       },
       suppressMarkers: true,
+      preserveViewport: true,
       });
       userPathDirectionsRenderer.setMap(map);
 
