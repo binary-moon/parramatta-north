@@ -15,7 +15,7 @@ export default {
           "neutral-content": "#F2F2F2",
         }
       }
-    ]
+    ],
+    darkTheme: "customTheme",
   }
 }
-
