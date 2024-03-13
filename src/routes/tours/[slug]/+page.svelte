@@ -10,7 +10,7 @@
   const { pageData } = data;
   console.log({pageData})
 
-  let isTourStarted = true;
+  let isTourStarted = false;
 
   const startTour = () => {
     isTourStarted = true;
