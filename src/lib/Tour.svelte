@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
 
   import TourSteps from '$lib/TourSteps.svelte';
-  import { areTourDetailsExpanded } from '$lib/store';
+  import { areTourDetailsExpanded, isTourStarted } from '$lib/store';
 
   import { loadScript } from '$lib/utilities/loadScript';
 
@@ -178,7 +178,14 @@
     if (window.DeviceOrientationEvent) {
       window.removeEventListener('deviceorientation', handleDeviceOrientation);
     }
+
+    areTourDetailsExpanded.set(false);
+    isTourStarted.set(false);
   };
+
+  const finishTour = () => {
+    isTourStarted.set(false);
+  }
 
   onMount(() => {
     loadScript(`https://maps.googleapis.com/maps/api/js?key=${apiKey}`, async () => {
@@ -255,4 +262,7 @@
   })
 </script>
 <div id="map" class="h-full w-full"></div>
+{#if !$areTourDetailsExpanded}
+<button class="absolute top-10 right-6" on:click={finishTour}><img src="/Close_Button.png" alt="Close button" /></button>
+{/if}
 <TourSteps {tourSteps} {title} {activeStep} />
