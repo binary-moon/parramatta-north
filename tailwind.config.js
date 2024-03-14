@@ -1,31 +1,20 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
-    extend: {
-      colors: {
-        primary: 'rgb(var(--p) / <alpha-value>)',
-        accent: 'rgb(var(--a) / <alpha-value>)',
-        neutral: 'rgb(var(--n) / <alpha-value>)',
-        'neutral-content': 'rgb(var(--nc) / <alpha-value>)',
-      },
-    },
+    extend: {},
   },
-  plugins: [
-    require("daisyui"),
-    require("@tailwindcss/typography"),
-  ],
+  plugins: [require("daisyui"), require("@tailwindcss/typography")],
   daisyui: {
-    styled: true,
     themes: [
       {
         "parramattaNorth": {
-          "--p": "243 99 27",   // Primary color (RGB values)
-          "--a": "0 38 100",    // Accent color (RGB values)
-          "--n": "34 39 43",    // Neutral color (RGB values)
-          "--nc": "242 242 242", // Neutral content color (RGB values)
+          "primary": "#F3631B",
+          "accent": "#002664",
+          "neutral": "#22272B",
+          "neutral-content": "#F2F2F2",
         }
       }
     ]
   }
-};
+}
