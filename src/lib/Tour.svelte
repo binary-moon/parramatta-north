@@ -161,6 +161,8 @@
     //   );
     // }
 
+    console.log(navigator.geolocation)
+
     if (navigator.geolocation) {
       drawUserMarkerAndUpdateLocation();
     }
