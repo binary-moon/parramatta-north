@@ -16,7 +16,8 @@ export class UserMarker extends google.maps.OverlayView {
 
     // Add the element to the "overlayLayer" pane.
     const panes = this.getPanes();
-    panes.markerLayer.appendChild(this.div);
+    console.log(panes)
+    panes.floatPane.appendChild(this.div);
   }
 
   draw() {
