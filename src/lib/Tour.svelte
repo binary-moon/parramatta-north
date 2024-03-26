@@ -135,31 +135,31 @@
       markers.push(marker); // Store marker for later use
     });
 
-    if (tourSteps.length > 1) {
-      const waypoints = tourSteps.slice(1, tourSteps.length - 1).map((step) => ({
-        location: step.location,
-        stopover: true,
-      }));
+    // if (tourSteps.length > 1) {
+    //   const waypoints = tourSteps.slice(1, tourSteps.length - 1).map((step) => ({
+    //     location: step.location,
+    //     stopover: true,
+    //   }));
 
-      const origin = tourSteps[0].location;
-      const destination = tourSteps[tourSteps.length - 1].location;
+    //   const origin = tourSteps[0].location;
+    //   const destination = tourSteps[tourSteps.length - 1].location;
 
-      directionsService.route(
-        {
-          origin: origin,
-          destination: destination,
-          waypoints: waypoints,
-          travelMode: google.maps.TravelMode.WALKING,
-        },
-        (result, status) => {
-          if (status === google.maps.DirectionsStatus.OK) {
-            directionsRenderer.setDirections(result);
-          } else {
-            console.error(`Directions request failed due to ${status}`);
-          }
-        }
-      );
-    }
+    //   directionsService.route(
+    //     {
+    //       origin: origin,
+    //       destination: destination,
+    //       waypoints: waypoints,
+    //       travelMode: google.maps.TravelMode.WALKING,
+    //     },
+    //     (result, status) => {
+    //       if (status === google.maps.DirectionsStatus.OK) {
+    //         directionsRenderer.setDirections(result);
+    //       } else {
+    //         console.error(`Directions request failed due to ${status}`);
+    //       }
+    //     }
+    //   );
+    // }
 
     if (navigator.geolocation) {
       drawUserMarkerAndUpdateLocation();
@@ -186,6 +186,25 @@
   const finishTour = () => {
     isTourStarted.set(false);
   }
+
+  const requestDeviceOrientationPermission = async () => {
+    console.log(DeviceOrientationEvent.requestPermission)
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      try {
+        const permissionState = await DeviceOrientationEvent.requestPermission();
+        if (permissionState === 'granted') {
+          window.addEventListener('deviceorientation', handleDeviceOrientation);
+        } else {
+          console.log('Device Orientation permission denied');
+        }
+      } catch (error) {
+        console.error('Error requesting Device Orientation permission:', error);
+      }
+    } else {
+      // Handle browsers that don't support permission request
+      window.addEventListener('deviceorientation', handleDeviceOrientation);
+    }
+};
 
   onMount(() => {
     loadScript(`https://maps.googleapis.com/maps/api/js?key=${apiKey}`, async () => {
@@ -250,7 +269,8 @@
       UserMarker = module.UserMarker;
 
       if (window.DeviceOrientationEvent) {
-        window.addEventListener('deviceorientation', handleDeviceOrientation);
+        // window.addEventListener('deviceorientation', handleDeviceOrientation);
+        requestDeviceOrientationPermission();
       }
 
       loadMarkersAndDrawRoute(map)
