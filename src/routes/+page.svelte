@@ -6,12 +6,9 @@
   export let data;
   const { pageData } = data;
 
-  console.log(pageData)
-
   // Dynamically import components based on the componentType
   onMount(async () => {
     const imports = pageData.map(item => {
-      console.log(item)
       const componentType = item.componentType;
       return import(`$lib/${componentType}.svelte`)
         .then(comp => {
