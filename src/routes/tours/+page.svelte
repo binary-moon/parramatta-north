@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import data from './data.json';
 
   import Filter from '$lib/Filter.svelte';
   import Card from '$lib/Card.svelte';
@@ -9,20 +8,15 @@
 
   import type { ITour } from '$lib/types';
 
-  let tours: ITour[] = [];
+  export let data;
+
+  const { tours, filterOptions } = data;
+  
   let filteredTours: ITour[] = [];
-  let filterOptions: string[] = ['All'];  
+  
+  activeFilter.set('All');
 
-  // Dynamically import components based on the componentType
-  onMount(async () => {
-    tours = data
-    filterOptions = [...filterOptions, ...new Set(tours.map(tour => tour.tag))]
-    console.log({tours})
-
-    activeFilter.set('All');
-  });
-
-  $: filteredTours = $activeFilter === 'All' ? tours : tours.filter(tour => tour.tag === $activeFilter)
+  $: filteredTours = $activeFilter === 'All' ? tours : tours.filter(tour => tour.tags.includes($activeFilter))
 </script>
 
 <div class="flex flex-col gap-6 pb-6 relative">

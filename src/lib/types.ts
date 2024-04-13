@@ -21,7 +21,7 @@ export interface ILatestNews {
 
 export interface ITour {
   id: number;
-  tag: string;
+  tags: string;
   title: string;
   subtitle: string;
   image: string;
@@ -34,7 +34,7 @@ export interface ITour {
 
 export interface IPlace {
   id: number;
-  tag: string;
+  tags: string[];
   title: string;
   description: string;
   distance: string;

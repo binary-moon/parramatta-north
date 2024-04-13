@@ -16,3 +16,9 @@ export function calculateDistance(lat1: number, lng1: number, lat2: number, lng2
 
   return R * c;
 }
+
+export function formatDateDDMMMYYYY(dateString: string) {
+  const options = { day: '2-digit', month: 'short', year: 'numeric' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-AU', options);
+}

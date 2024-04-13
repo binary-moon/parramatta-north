@@ -7,7 +7,7 @@
 
   // Function to construct class names
   function constructClassNames() {
-    let baseClasses = 'btn rounded-full text-lg font-bold';
+    let baseClasses = 'btn rounded-full text-lg font-bold normal-case';
     let styleClasses = `btn-${buttonStyle} ${buttonStyle === 'ghost' || isOutline ? 'text-neutral' : 'text-white'}`;
     let outlineClass = isOutline ? 'btn-outline border-[2px]' : '';
     

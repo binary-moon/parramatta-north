@@ -1,15 +1,13 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import data from './data.json';
-
     import type { IFaq } from '$lib/types';
     import Collapsible from '$lib/Collapsible.svelte';
 
-    let faqs: IFaq[] = [];
+    export let data;
 
-    onMount(async () => {
-      faqs = data
-    });
+    console.log(data)
+
+    $: ({ faqs } = data);
+
 </script>
 <div class="flex flex-col pt-16 pb-6 -mt-8 relative px-6 gap-8">
   <h2 class="text-3xl text-primary font-bold">FAQs</h2>

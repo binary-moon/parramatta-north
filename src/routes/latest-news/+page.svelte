@@ -1,16 +1,12 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import data from './data.json';
+  import NewsCard from '$lib/NewsCard.svelte';
 
-    import NewsCard from '$lib/NewsCard.svelte';
+  import type { ILatestNews } from '$lib/types';
+  
+  export let data;
+  console.log({data})
 
-    import type { ILatestNews } from '$lib/types';
-
-    let latestNews: ILatestNews[] = [];
-
-    onMount(async () => {
-        latestNews = data
-    });
+  const { latestNews } = data;
 </script>
 
 <div class="flex flex-col pt-16 pb-6 -mt-8 relative">

@@ -1,17 +1,11 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import data from './data.json';
-  
     import Card from '$lib/Card.svelte';
   
     import type { IWhatsOn } from '$lib/types';
-  
-    let whatsOns: IWhatsOn[] = [];
-  
-    // Dynamically import components based on the componentType
-    onMount(async () => {
-      whatsOns = data
-    });
+
+    export let data;
+    console.log({data})
+    const { events: whatsOns } = data;
   </script>
   
   <div class="flex flex-col gap-6 pt-16 pb-6 -mt-8 relative">

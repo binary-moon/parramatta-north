@@ -5,6 +5,8 @@
   export let description: string;
   export let image: string;
   export let href: string;
+
+  const placeholderImage = 'https://placehold.co/396x297/black/333';
 </script>
 <a href={href}>
   <div class="flex flex-col gap-6 py-6 border-b-neutral-content border-b-[1px] border-solid">
@@ -13,7 +15,7 @@
         <span class="text-primary text-sm font-bold">{date}</span>
         <span class="text-[22px]/[28px] font-bold">{title}</span>
       </div>
-      <img src={image} alt={title} class="w-[132px] rounded-[30px] block"/>
+      <img src={image || placeholderImage} alt={title} class="w-[132px] rounded-[30px] block"/>
     </div>
     <span class="text-base">{description}</span>
   </div>
