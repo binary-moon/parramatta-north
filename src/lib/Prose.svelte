@@ -1,3 +1,3 @@
-<div class="prose prose-neutral prose-a:text-primary prose-a:font-bold">
+<div class="prose prose-parramatta-north">
   <slot></slot>
 </div>

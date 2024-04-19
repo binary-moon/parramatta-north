@@ -1,10 +1,13 @@
 export class PlaceMarker extends google.maps.OverlayView {
-  constructor(position, map, image) {
+  constructor(position, map, image, isActive, onClick, index = 0) {
     super()
     this.position = position
     this.map = map
     this.image = image
     this.div = null
+    this.isActive = isActive;
+    this.index = index;
+    this.onClick = onClick;
     this.setMap(map)
   }
 
@@ -12,10 +15,19 @@ export class PlaceMarker extends google.maps.OverlayView {
     this.div = document.createElement('div');
     this.div.className = 'placeMarker';
     this.div.innerHTML = `<div class="placeMarkerTriangle"></div><div class="placeMarkerInner"><img src="${this.image}" alt="place marker" /></div>`;
+    if (this.isActive) {
+      this.div.classList.add('placeMarker--active');
+    }
 
     // Add the element to the "overlayLayer" pane.
     const panes = this.getPanes();
-    panes.overlayLayer.appendChild(this.div);
+    panes.overlayMouseTarget.appendChild(this.div);
+
+    this.div.addEventListener('click', () => {
+      if (this.onClick) {
+        this.onClick(this);
+      }
+    })
   }
 
   draw() {
@@ -32,5 +44,9 @@ export class PlaceMarker extends google.maps.OverlayView {
       this.div.parentNode.removeChild(this.div);
       this.div = null;
     }
+  }
+
+  getPosition() {
+    return this.position;
   }
 }

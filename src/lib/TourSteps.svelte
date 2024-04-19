@@ -17,9 +17,9 @@
 </script>
 <div class="absolute top-12 left-3 transition-transform duration-300 ease-in-out" style={styles}>
   <div class="flex h-full gap-[6px] snap-x snap-mandatory" >
-    {#each tourSteps as tourStep}
+    {#each tourSteps as tourStep, index}
       <div class="flex-none w-full h-full snap-start relative">
-        <TourStepDetail details={tourStep} {title}/>
+        <TourStepDetail details={tourStep} {title} {index}/>
       </div>
     {/each}
   </div>

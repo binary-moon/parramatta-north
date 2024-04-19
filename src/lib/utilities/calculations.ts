@@ -22,3 +22,15 @@ export function formatDateDDMMMYYYY(dateString: string) {
   const date = new Date(dateString);
   return date.toLocaleDateString('en-AU', options);
 }
+
+export function formatStringToDateDDMMMYYYY(dateString: string) {
+  const year = dateString.slice(0, 4);
+  const month = dateString.slice(4, 6);
+  const day = dateString.slice(6);
+
+  const date = new Date(year, month - 1, day);
+  const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  const formattedDate = date.toLocaleDateString('en-AU', options);
+
+  return formattedDate;
+}

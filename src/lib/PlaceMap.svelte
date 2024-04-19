@@ -66,7 +66,8 @@
   const loadMarkersAndDrawRoute = (map: google.maps.Map) => {
     // Load markers and draw route
 
-    placeMarker = new PlaceMarker(location, map, image);
+    placeMarker = new PlaceMarker(location, map, image, true);
+    placeMarker.setIsActive(true);
 
     if (navigator.geolocation) {
       drawUserMarkerAndUpdateLocation();
@@ -97,8 +98,28 @@
     const placeMarkerModule = await import('$lib/classes/PlaceMarker');
     PlaceMarker = placeMarkerModule.PlaceMarker;
 
-    if (window.DeviceOrientationEvent) {
+    const requestDeviceOrientationPermission = async () => {
+    console.log(DeviceOrientationEvent.requestPermission)
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      try {
+        const permissionState = await DeviceOrientationEvent.requestPermission();
+        if (permissionState === 'granted') {
+          window.addEventListener('deviceorientation', handleDeviceOrientation);
+        } else {
+          console.log('Device Orientation permission denied');
+        }
+      } catch (error) {
+        console.error('Error requesting Device Orientation permission:', error);
+      }
+    } else {
+      // Handle browsers that don't support permission request
       window.addEventListener('deviceorientation', handleDeviceOrientation);
+    }
+  };
+
+    if (window.DeviceOrientationEvent) {
+      // window.addEventListener('deviceorientation', handleDeviceOrientation);
+      requestDeviceOrientationPermission();
     }
 
     directionsService = new google.maps.DirectionsService();

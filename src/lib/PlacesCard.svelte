@@ -1,10 +1,13 @@
 <script lang="ts">
 
+import Pill from "./Pill.svelte";
+
   export let title: string;
   export let description: string;
   export let distance: string;
   export let image: string;
   export let href: string;
+  export let tags: string[] = [];
 
   const placeholderImage = "https://placehold.co/396x297/black/333"
 </script>
@@ -12,6 +15,13 @@
   <div class="flex flex-col gap-6 py-6 border-b-neutral-content border-b-[1px] border-solid">
     <div class="flex gap-4 justify-between items-start">
       <div class="flex flex-col gap-3">
+        {#if tags && (tags.length > 0)}
+          <div class="flex gap-2">
+            {#each tags as tag}
+              <Pill text={tag} />
+            {/each}
+          </div>
+        {/if}
         <span class="text-[22px]/[28px] font-bold">{title}</span>
         {#if description}
           <span class="text-base/[22px]">{description}</span>

@@ -82,7 +82,7 @@ export const load = (async ({ fetch }) => {
         raw: newsData,
         props: {
           title: "Latest News",
-          moreLink: "/news",
+          moreLink: "/latest-news",
           items: news,
         },
       },

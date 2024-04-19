@@ -51,6 +51,8 @@
     }
   };
 
+  
+
   const drawUserMarkerAndUpdateLocation = () => {
     watchId = navigator.geolocation.watchPosition((position) => {
       const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -135,34 +137,6 @@
       markers.push(marker); // Store marker for later use
     });
 
-    // if (tourSteps.length > 1) {
-    //   const waypoints = tourSteps.slice(1, tourSteps.length - 1).map((step) => ({
-    //     location: step.location,
-    //     stopover: true,
-    //   }));
-
-    //   const origin = tourSteps[0].location;
-    //   const destination = tourSteps[tourSteps.length - 1].location;
-
-    //   directionsService.route(
-    //     {
-    //       origin: origin,
-    //       destination: destination,
-    //       waypoints: waypoints,
-    //       travelMode: google.maps.TravelMode.WALKING,
-    //     },
-    //     (result, status) => {
-    //       if (status === google.maps.DirectionsStatus.OK) {
-    //         directionsRenderer.setDirections(result);
-    //       } else {
-    //         console.error(`Directions request failed due to ${status}`);
-    //       }
-    //     }
-    //   );
-    // }
-
-    console.log(navigator.geolocation)
-
     if (navigator.geolocation) {
       drawUserMarkerAndUpdateLocation();
     }
@@ -190,14 +164,12 @@
   }
 
   const requestDeviceOrientationPermission = async () => {
-    console.log(DeviceOrientationEvent.requestPermission)
     if (typeof DeviceOrientationEvent.requestPermission === 'function') {
       try {
         const permissionState = await DeviceOrientationEvent.requestPermission();
         if (permissionState === 'granted') {
           window.addEventListener('deviceorientation', handleDeviceOrientation);
         } else {
-          console.log('Device Orientation permission denied');
         }
       } catch (error) {
         console.error('Error requesting Device Orientation permission:', error);
@@ -206,7 +178,21 @@
       // Handle browsers that don't support permission request
       window.addEventListener('deviceorientation', handleDeviceOrientation);
     }
-};
+  };
+
+  const sortTourStepsByUserLocation = (userLocation: google.maps.LatLng) => {
+    tourSteps.sort((a, b) => {
+      const distanceA = google.maps.geometry.spherical.computeDistanceBetween(
+        userLocation,
+        new google.maps.LatLng(a.location.lat, a.location.lng)
+      );
+      const distanceB = google.maps.geometry.spherical.computeDistanceBetween(
+        userLocation,
+        new google.maps.LatLng(b.location.lat, b.location.lng)
+      );
+      return distanceA - distanceB;
+    });
+  };
 
   onMount(() => {
     loadScript(`https://maps.googleapis.com/maps/api/js?key=${apiKey}`, async () => {
@@ -255,10 +241,10 @@
               strokeOpacity: 1,
               strokeColor: "#F3631B",
               strokeWeight: 1,
-              scale: 5,
+              scale: 3,
             },
             offset: "0",
-            repeat: "25px",
+            repeat: "16px",
           },
         ],
       },
@@ -275,7 +261,16 @@
         requestDeviceOrientationPermission();
       }
 
-      loadMarkersAndDrawRoute(map)
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          sortTourStepsByUserLocation(userLocation); // Sort tour steps based on user location
+          loadMarkersAndDrawRoute(map);
+          drawUserMarkerAndUpdateLocation();
+        }, null, { enableHighAccuracy: true });
+      } else {
+        loadMarkersAndDrawRoute(map);
+      }
     });
 
     return () => {
@@ -285,6 +280,6 @@
 </script>
 <div id="map" class="h-full w-full"></div>
 {#if !$areTourDetailsExpanded}
-<button class="absolute top-10 right-6" on:click={finishTour}><img src="/Close_Button.png" alt="Close button" /></button>
+  <button class="absolute top-10 right-6" on:click={finishTour}><img src="/Close_Button.png" alt="Close button" /></button>
 {/if}
 <TourSteps {tourSteps} {title} {activeStep} />

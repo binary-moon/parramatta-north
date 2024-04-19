@@ -14,6 +14,8 @@
   let distance: number | null = null;
   let apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   let isGoogleMapsLoaded: boolean = false;
+  const detailImagePlaceholder = 'https://placehold.co/1284x1080/black/333';
+  const mapImagePlaceholder = 'https://placehold.co/255x255/black/333';
   
   export let data: PageData;
 
@@ -41,16 +43,23 @@
 {#if pageData}
   {#if isMapView && isGoogleMapsLoaded}
     <div class="flex flex-col w-full h-full absolute top-0 left-0 bg-white z-40 overflow-hidden">
-      <PlaceMap location={pageData.location} title={pageData.title} image={pageData.mapImage} />
+      <PlaceMap location={pageData.location} title={pageData.title} image={pageData.mapImage || mapImagePlaceholder} />
     </div>
   {:else}
-    <div class="flex flex-col w-full h-full absolute top-0 left-0 bg-white overflow-y-scroll">
-      <img src={pageData.detailImage} alt={pageData.title} />
+    <div class="flex flex-col w-full h-full absolute top-0 left-0 bg-white overflow-y-scroll pb-[100px]">
+      <div class="relative">
+        <img src={pageData.detailImage || detailImagePlaceholder} alt={pageData.title} />
+        <img src="/Whats_On_Deco.svg" alt="Promo decoration" class="absolute -bottom-12 right-0">
+      </div>
       <div class="px-6 py-9">
         <a href="/places" class="flex gap-2 font-semibold text-lg"><img src="/Black_Arrow.svg"> All Places</a>
-        <div class="pt-6">
-          <Pill text={pageData.tag} />
-        </div>
+        {#if pageData.tags && (pageData.tags.length > 0)}
+          <div class="flex gap-2 pt-6">
+            {#each pageData.tags as tag}
+              <Pill text={tag} />
+            {/each}
+          </div>
+        {/if}
         <h1 class="text-3xl font-bold pt-[18px]">{pageData.title}</h1>
         {#if distance}
           <span class="text-primary text-bold text-sm pt-2">{distance} metres away</span>

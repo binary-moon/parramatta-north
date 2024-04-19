@@ -60,6 +60,7 @@ body, body * {
 }
 
 .placeMarkerInner {
+  display: none;
   width: 85px;
   height: 85px;
   border-radius: 100%;
@@ -71,6 +72,7 @@ body, body * {
 }
 
 .placeMarkerTriangle {
+  display: none;
   width: 0;
   height: 0;
   border-left: 12px solid transparent;
@@ -80,6 +82,14 @@ body, body * {
   top: -23px;
   left: -4px;
   z-index: 2;
+}
+
+.placeMarker--active .placeMarkerInner {
+  display: block;
+}
+
+.placeMarker--active .placeMarkerTriangle {
+  display: block;
 }
 
 .placeMarkerInner img {
