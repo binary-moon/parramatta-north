@@ -30,7 +30,7 @@
 
       const placesWithImages = await Promise.all(data.map(async place => {
         if (place.acf.image) {
-          place.mapImage = await fetchImage(place.acf.image);
+          place.mapImage = await fetchImage(place.acf.image, "full");
         }
         return place;
       }));
@@ -101,7 +101,7 @@
 {:else}
   <div class="flex flex-col w-full h-full absolute top-0 left-0 bg-white overflow-y-scroll">
     <div class="relative">
-      <Image imageId={detailImage} placeholderImage={detailImagePlaceholder} alt={title} />
+      <Image imageId={detailImage} placeholderImage={detailImagePlaceholder} alt={title} imageSize="full" />
       <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.00) 70%);"></div>
       <img src="/Whats_On_Deco.svg" alt="Promo decoration" class="absolute -bottom-12 right-0">
     </div>

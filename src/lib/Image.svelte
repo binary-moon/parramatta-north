@@ -6,11 +6,12 @@
   export let imageId: number;
   export let placeholderImage: string | null = '';
   export let alt: string = 'Image';
+  export let imageSize: string = 'full';
 
   let imageUrl = placeholderImage
 
   const loadImage = async () => {
-    const image = await fetchImage(imageId);
+    const image = await fetchImage(imageId, imageSize);
     imageUrl = image || placeholderImage;
   }
 

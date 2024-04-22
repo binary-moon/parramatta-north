@@ -27,7 +27,7 @@ export const load = (async ({ fetch }) => {
       subtitle: event.acf.excerpt,
       tags: event.tags.map(tag => tag.name),
       image: event.acf.image,
-      href: `/events/${event.id}`,
+      href: `/whats-on/${event.id}`,
     }
   })
 

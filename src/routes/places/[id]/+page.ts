@@ -5,7 +5,7 @@ export const load = (async ({ fetch, params }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const response = await fetch(`${apiUrl}/place/${params.id}`);
   const data = await response.json();
-  const mapImage = await fetchImage(data.acf.image);
+  const mapImage = await fetchImage(data.acf.image, 'thumbnail');
 
   const pageData = {
     raw: data,
