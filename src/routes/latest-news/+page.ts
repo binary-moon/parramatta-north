@@ -10,7 +10,7 @@ export const load = (async ({ fetch }) => {
     return {
       raw: news,
       title: news.title.rendered,
-      image: undefined,
+      image: news.acf.image,
       description: news.acf.excerpt,
       href: `/latest-news/${news.id}`,
       date: formatDateDDMMMYYYY(news.date),

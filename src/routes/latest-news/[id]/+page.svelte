@@ -2,9 +2,9 @@
     import type { PageData } from './$types';
 
     import Prose from '$lib/Prose.svelte';
+    import Image from '$lib/Image.svelte';
     
     export let data: PageData;
-    console.log({data})
 
     const detailImagePlaceholder = "https://placehold.co/1284x1080/black/333"
 
@@ -12,7 +12,8 @@
 </script>
 <div class="flex flex-col w-full h-full absolute top-0 left-0 bg-white overflow-y-scroll pb-[100px]">
   <div class="relative">
-    <img src={detailImage || detailImagePlaceholder} alt={title} />
+    <Image imageId={detailImage} placeholderImage={detailImagePlaceholder} alt={title} />
+    <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.00) 70%);"></div>
     <img src="/Whats_On_Deco.svg" alt="Promo decoration" class="absolute -bottom-12 right-0">
   </div>
   <div class="flex flex-col px-6 py-9">

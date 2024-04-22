@@ -4,7 +4,6 @@
   import type { IWhatsOn } from '$lib/types';
 
   export let data;
-  console.log({data})
   const { events: whatsOns } = data;
 </script>
   

@@ -10,7 +10,7 @@ export const load = (async ({fetch}) => {
       raw: place,
       title: place.title.rendered,
       description: place.acf.excerpt,
-      image: undefined,
+      image: place.acf.image,
       href: `/places/${place.id}`,
       tags: place.tags.map(tag => tag.name),
       location: {

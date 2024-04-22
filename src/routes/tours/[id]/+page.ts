@@ -12,6 +12,7 @@ export const load = (async ({ fetch, params }) => {
     tags: data.tags.map(tag => tag.name),
     content: data.content.rendered,
     places: data.acf.places_included,
+    image: data.acf.image,
   }
 
   return { 

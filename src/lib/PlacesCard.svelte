@@ -1,11 +1,12 @@
 <script lang="ts">
 
 import Pill from "./Pill.svelte";
+  import Image from "./Image.svelte";
 
   export let title: string;
   export let description: string;
   export let distance: string;
-  export let image: string;
+  export let image: number;
   export let href: string;
   export let tags: string[] = [];
 
@@ -30,7 +31,7 @@ import Pill from "./Pill.svelte";
           <span class="text-primary text-sm font-bold">{`${distance} meters away`}</span>
         {/if}
       </div>
-      <img src={image || placeholderImage} alt={title} class="w-[132px] rounded-[30px] block"/>
+      <Image imageId={image} placeholderImage={placeholderImage} alt={title} classes="w-[132px] rounded-[30px] block"/>
     </div>
   </div>
 </a>

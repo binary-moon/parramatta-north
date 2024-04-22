@@ -10,7 +10,7 @@ export const load = (async ({fetch}) => {
       raw: event,
       title: event.title.rendered,
       subtitle: event.acf.excerpt,
-      image: undefined,
+      image: event.acf.image,
       href: `/whats-on/${event.id}`,
       tags: event.tags.map(tag => tag.name),
     }

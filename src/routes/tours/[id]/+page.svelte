@@ -4,6 +4,7 @@
   import Button from '$lib/Button.svelte';
   import Pill from '$lib/Pill.svelte';
   import Tour from '$lib/Tour.svelte';
+  import BackgroundImage from '$lib/BackgroundImage.svelte';
 
   import type { PageData } from './$types';
   import { activeFilter, isTourStarted } from '$lib/store';
@@ -16,7 +17,6 @@
   let arePlacesFetched = false;
 
   const { pageData } = data;
-  console.log({pageData})
 
   const fetchPlaces = async () => {
     try {
@@ -37,7 +37,6 @@
 
   onMount(() => {
     fetchPlaces().then(data => {
-      console.log({data})
       places = data.map(place => {
         return {
           id: place.id,
@@ -49,13 +48,12 @@
           beforeArrival: place.acf.before_arrival,
           whenArrived: place.acf.after_arrival,
           arLink: place.acf.ar_url,
-          image: null,
+          image: place.acf.image,
           content: place.acf.description,
           videoLink: place.acf.video,
           audioLink: place.acf.vo_file,
         }
       });
-      console.log({places})
       arePlacesFetched = true;
     })
   });
@@ -67,30 +65,36 @@
       <Tour tourSteps={places} title={pageData.title} defaultLocation={places[0].location}/>
     </div>
   {:else}
-    <div class="flex flex-col justify-end w-full h-full absolute top-0 left-0 bg-cover bg-center text-white" style="background-image: url('{pageData.detailImage || detailImagePlaceholder}');">
-      <div class="flex flex-col p-6 pb-[62px]">
-        <a href="/tours" class="flex gap-2 font-semibold"><img src="/White_Arrow.svg"> See all tours</a>
-        <h1 class="text-5xl/[58px] font-bold mt-3">{pageData.title}</h1>
-        <span class="text-sm mt-3">{pageData.subtitle}</span>
-        <div class="flex flex-wrap gap-3 mt-5">
-          {#if pageData.tags}
-            {#each pageData.tags as tag}
-              <Pill text={tag} type="white" />
-            {/each}
+    <BackgroundImage
+      classes="flex w-full h-full absolute top-0 left-0 text-white"
+      imageId={pageData.image}
+      placeholderImage={detailImagePlaceholder}
+    >
+      <div class="w-full h-full absolute top-0 left-0 flex flex-col justify-end" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.80) 80.35%)">
+        <div class="flex flex-col p-6 pb-[62px]">
+          <a href="/tours" class="flex gap-2 font-semibold"><img src="/White_Arrow.svg"> See all tours</a>
+          <h1 class="text-5xl/[58px] font-bold mt-3">{pageData.title}</h1>
+          <span class="text-sm mt-3">{pageData.subtitle}</span>
+          <div class="flex flex-wrap gap-3 mt-5">
+            {#if pageData.tags}
+              {#each pageData.tags as tag}
+                <Pill text={tag} type="white" />
+              {/each}
+            {/if}
+          </div>
+          {#if pageData.content && pageData.content !== ""}
+            <p class="mt-6">{pageData.content}</p>
           {/if}
+          <Button buttonStyle="primary" additionalClasses="mt-10" handleClick={startTour}>
+            {#if arePlacesFetched}
+              Start tour now
+            {:else}
+              <span class="loading loading-spinner"></span>
+              Loading...
+            {/if}
+          </Button>
         </div>
-        {#if pageData.content && pageData.content !== ""}
-          <p class="mt-6">{pageData.content}</p>
-        {/if}
-        <Button buttonStyle="primary" additionalClasses="mt-10" handleClick={startTour}>
-          {#if arePlacesFetched}
-            Start tour now
-          {:else}
-            <span class="loading loading-spinner"></span>
-            Loading...
-          {/if}
-        </Button>
       </div>
-    </div>
+    </BackgroundImage>
   {/if}
 {/if}

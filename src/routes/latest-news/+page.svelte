@@ -4,7 +4,6 @@
   import type { ILatestNews } from '$lib/types';
   
   export let data;
-  console.log({data})
 
   const { latestNews } = data;
 </script>

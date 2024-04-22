@@ -11,7 +11,7 @@ export const load = (async ({fetch}) => {
       id: tour.id,
       title: tour.title.rendered,
       subtitle: tour.acf.excerpt,
-      image: undefined,
+      image: tour.acf.image,
       href: `/tours/${tour.id}`,
       tags: tour.tags.map(tag => tag.name),
     }

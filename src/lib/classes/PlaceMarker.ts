@@ -49,4 +49,12 @@ export class PlaceMarker extends google.maps.OverlayView {
   getPosition() {
     return this.position;
   }
+
+  makeActive() {
+    this.div.classList.add('placeMarker--active');
+  }
+
+  makeInactive() {
+    this.div.classList.remove('placeMarker--active');
+  }
 }

@@ -5,7 +5,10 @@
   import Button from '$lib/Button.svelte';
   import PlacesCard from '$lib/PlacesCard.svelte'; 
   import WhatsOnMap from '$lib/WhatsOnMap.svelte';
+  import Image from '$lib/Image.svelte';
+
   import { calculateDistance } from '$lib/utilities/calculations';
+  import { fetchImage } from '$lib/utilities/fetchImage';
 
   export let data;
   
@@ -19,14 +22,19 @@
   let watchId: number | null;
   let isMapView: boolean = false;
 
-  console.log({pageData})
-
   const fetchPlaces = async () => {
     try {
       const promises = placeIds.map(id => fetch(`${apiUrl}/place/${id}`));
       const responses = await Promise.all(promises);
       const data = await Promise.all(responses.map(res => res.json()));
-      return data;
+
+      const placesWithImages = await Promise.all(data.map(async place => {
+        if (place.acf.image) {
+          place.mapImage = await fetchImage(place.acf.image);
+        }
+        return place;
+      }));
+      return placesWithImages;
     } catch (error) {
       console.error('Error fetching places', error);
       throw error;
@@ -53,14 +61,14 @@
           beforeArrival: place.acf.before_arrival,
           whenArrived: place.acf.after_arrival,
           arLink: place.acf.ar_url,
-          image: null,
+          image: place.acf.image,
           content: place.acf.description,
           videoLink: place.acf.video,
           audioLink: place.acf.vo_file,
           tags: place.tags.map(tag => tag.name),
+          mapImage: place.mapImage || null,
         }
       });
-      console.log({places})
       arePlacesFetched = true;
 
       if (navigator.geolocation) {
@@ -93,7 +101,8 @@
 {:else}
   <div class="flex flex-col w-full h-full absolute top-0 left-0 bg-white overflow-y-scroll">
     <div class="relative">
-      <img src={detailImage || detailImagePlaceholder} alt={title} />
+      <Image imageId={detailImage} placeholderImage={detailImagePlaceholder} alt={title} />
+      <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.00) 70%);"></div>
       <img src="/Whats_On_Deco.svg" alt="Promo decoration" class="absolute -bottom-12 right-0">
     </div>
     <div class="px-6 py-9">

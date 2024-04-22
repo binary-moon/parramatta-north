@@ -8,6 +8,7 @@
   import Prose from '$lib/Prose.svelte';
   import Button from '$lib/Button.svelte';
   import PlaceMap from '$lib/PlaceMap.svelte';
+  import Image from "$lib/Image.svelte";
 
   let isMapView: boolean = false;
   let watchId: number | null = null;
@@ -20,7 +21,6 @@
   export let data: PageData;
 
   const { pageData } = data;
-  console.log({pageData})
 
   const toggleMap = () => {
     isMapView = !isMapView;
@@ -34,7 +34,6 @@
           const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
           distance = Math.floor(google.maps.geometry.spherical.computeDistanceBetween(userLocation, pageData.location));
-          console.log(distance)
         }, null, { enableHighAccuracy: true });
       }
     });
@@ -48,7 +47,8 @@
   {:else}
     <div class="flex flex-col w-full h-full absolute top-0 left-0 bg-white overflow-y-scroll pb-[100px]">
       <div class="relative">
-        <img src={pageData.detailImage || detailImagePlaceholder} alt={pageData.title} />
+        <Image imageId={pageData.detailImage} placeholderImage={detailImagePlaceholder} alt={pageData.title} />
+        <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.00) 70%);"></div>
         <img src="/Whats_On_Deco.svg" alt="Promo decoration" class="absolute -bottom-12 right-0">
       </div>
       <div class="px-6 py-9">

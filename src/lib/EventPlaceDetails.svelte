@@ -17,7 +17,7 @@
   $: styles = `transform: ${transformValue}; width: ${width}; height: ${height};`;
 
   const imagePlaceholder = "https://placehold.co/760x640/black/333";
-  $: ({ title, image, tags, distance, content } = place);
+  $: ({ title, image, tags, distance, content, mapImage } = place);
 
   const handleDetailToggle = () => {
     isPlaceExpanded = !isPlaceExpanded;
@@ -36,7 +36,7 @@
     {#if distance} 
       <span class="text-primary text-sm font-bold">{`${distance} meters away`}</span>
     {/if}
-    <img src={image || imagePlaceholder} alt={title} class="w-full mt-6 rounded-[12px]" />
+    <img src={mapImage || imagePlaceholder} alt={title} class="w-full mt-6 rounded-[12px]" />
     <div class="mt-6">
       <Prose>{@html content}</Prose>
     </div>

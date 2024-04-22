@@ -1,0 +1,21 @@
+<script lang="ts">
+  import { onMount } from 'svelte'
+  import { fetchImage } from './utilities/fetchImage';
+
+  export let classes = ''
+  export let imageId: number;
+  export let placeholderImage: string | null = '';
+  export let alt: string = 'Image';
+
+  let imageUrl = placeholderImage
+
+  const loadImage = async () => {
+    const image = await fetchImage(imageId);
+    imageUrl = image || placeholderImage;
+  }
+
+  onMount(() => {
+    loadImage();
+  })
+</script>
+<img src={imageUrl} class={classes} alt={alt}/>

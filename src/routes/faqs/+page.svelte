@@ -4,8 +4,6 @@
 
     export let data;
 
-    console.log(data)
-
     $: ({ faqs } = data);
 
 </script>

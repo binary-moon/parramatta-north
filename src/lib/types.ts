@@ -75,7 +75,7 @@ export interface ITourStep {
   step: number,
   location: ILatLong
   title: string;
-  image: string;
+  image: number;
   beforeArrival: string;
   whenArrived: string;
   arLink: string;

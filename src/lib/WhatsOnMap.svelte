@@ -99,13 +99,14 @@
   }
 
   const handleMarkerClick = (marker) => {
-    console.log({marker})
     activePlace = marker.index;
+    placeMarkers.forEach(marker => marker.makeInactive());
+    marker.makeActive();
   }
 
   const loadMarkersAndDrawRoute = (map: google.maps.Map) => {
     places.forEach((place, index) => {
-      const placeMarker = new PlaceMarker(place.location, map, place.image || mapImagePlaceholder, index === 0 ? true : false, handleMarkerClick, index);
+      const placeMarker = new PlaceMarker(place.location, map, place.mapImage || mapImagePlaceholder, index === 0 ? true : false, handleMarkerClick, index);
       placeMarkers.push(placeMarker); // Store marker for later use
     });
 
@@ -115,10 +116,8 @@
   }
 
   $: {
-    console.log({ userMarker, userMarkerType: typeof userMarker?.getPosition, activePlace })
     if (userMarker && typeof userMarker.getPosition === 'function' && activePlace > -1) {
       const userLocation = userMarker.getPosition();
-      console.log('hello ')
       drawPathToActiveMarker(userLocation);
     }
   }
@@ -148,7 +147,6 @@
   };
 
   onMount(() => {
-    console.log({ places });
     loadScript(`https://maps.googleapis.com/maps/api/js?key=${apiKey}`, async () => {
       map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
         center: places[0].location,

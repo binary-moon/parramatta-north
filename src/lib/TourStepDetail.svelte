@@ -1,6 +1,7 @@
 <script lang="ts">
   import Button from './Button.svelte';
   import Prose from './Prose.svelte';
+  import Image from './Image.svelte';
 
   import { areTourDetailsExpanded } from "./store";
 
@@ -9,7 +10,6 @@
   export let details: ITourStep;
   export let title: string;
   export let index: number;
-  console.log({details})
 
   const imagePlaceholder = "https://placehold.co/760x640/black/333";
 
@@ -19,7 +19,6 @@
   }
 
   const handleDetailToggle = () => {
-    console.log($areTourDetailsExpanded)
     areTourDetailsExpanded.set(!$areTourDetailsExpanded)
   }
 
@@ -31,7 +30,7 @@
     <span class="text-primary text-sm/[26px] font-bold">{title}</span>
   </div>
   <h4 class="text-[22px]/[28px] font-bold mt-3">{details.title}</h4>
-  <img src={details.image || imagePlaceholder} alt={details.title} class="w-full mt-6 rounded-[12px]" />
+  <Image imageId={details.image} placeholder={imagePlaceholder} alt={details.title} classes="w-full mt-6 rounded-[12px]" />
   <div class="flex flex-col gap-3 bg-neutral-content p-6 rounded-[12px] mt-6">
     <div class="flex gap-3">
       <img src="/Arrival_Icon.svg" alt="Arrival Icon" />

@@ -10,7 +10,7 @@ export const load = (async ({ fetch, params }) => {
   const pageData = {
     raw: data,
     title: data.title.rendered,
-    detailImage: null,
+    detailImage: data.acf.image,
     dateStart: formatStringToDateDDMMMYYYY(data.acf.date_start),
     dateEnd: formatStringToDateDDMMMYYYY(data.acf.date_end),
     htmlContent: data.acf.description,

@@ -36,7 +36,6 @@
   });
 
   $: filteredPlaces = ($activeFilter === 'All' ? places : places.filter(place => place.tags.includes($activeFilter))).sort((a, b) => a.distance - b.distance);
-  $: console.log(filteredPlaces);
 </script>
 
 <div class="flex flex-col gap-6 pb-6 relative">
