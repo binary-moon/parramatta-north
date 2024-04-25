@@ -17,7 +17,18 @@
   const imagePlaceholder = "https://placehold.co/760x640/black/333";
   const { title: placeTitle, whenArrived, beforeArrival, content, image, audioLink, arLink } = details;
 
-  const requestDevicePermissions = async () => {
+  const handleAudioClick = (event: MouseEvent) => {
+    event.stopPropagation();
+    console.log('Audio Click');
+  }
+
+  const handleDetailToggle = () => {
+    areTourDetailsExpanded.set(!$areTourDetailsExpanded)
+  }
+
+  const handleArClick = async (event: MouseEvent) => {
+    event.stopPropagation();
+
     try {
       // Request camera permission
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -41,20 +52,6 @@
     } catch (error) {
       console.error('Error requesting permissions:', error);
     }
-  }
-
-  const handleAudioClick = (event: MouseEvent) => {
-    event.stopPropagation();
-    console.log('Audio Click');
-  }
-
-  const handleDetailToggle = () => {
-    areTourDetailsExpanded.set(!$areTourDetailsExpanded)
-  }
-
-  const handleArClick = async (event: MouseEvent) => {
-    event.stopPropagation();
-    await requestDevicePermissions();
   }
 
 </script>
