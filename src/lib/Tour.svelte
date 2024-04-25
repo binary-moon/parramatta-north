@@ -1,11 +1,13 @@
 <script lang="ts">
-  import type { ILatLong, ITourStep } from '$lib/types';
   import { onMount } from 'svelte';
 
   import TourSteps from '$lib/TourSteps.svelte';
-  import { areTourDetailsExpanded, isTourStarted } from '$lib/store';
+  import ARFrame from '$lib/ARFrame.svelte';
 
+  import { areTourDetailsExpanded, isTourStarted, isARActive, activeARURL } from '$lib/store';
   import { loadScript } from '$lib/utilities/loadScript';
+
+  import type { ILatLong, ITourStep } from '$lib/types';
 
   let map: google.maps.Map;
   let directionsService: google.maps.DirectionsService;
@@ -155,6 +157,8 @@
       window.removeEventListener('deviceorientation', handleDeviceOrientation);
     }
 
+    window.removeEventListener('message', (event) => removeARFrame(event));
+
     areTourDetailsExpanded.set(false);
     isTourStarted.set(false);
   };
@@ -193,6 +197,13 @@
       return distanceA - distanceB;
     });
   };
+
+  const removeARFrame = (event) => {
+    const eventData = event.data;
+    if (eventData.action === 'exitAR') {
+      isARActive.set(false);
+    }
+  }
 
   onMount(() => {
     loadScript(`https://maps.googleapis.com/maps/api/js?key=${apiKey}`, async () => {
@@ -273,6 +284,8 @@
       }
     });
 
+    window.addEventListener('message', (event) => removeARFrame(event));
+
     return () => {
       clearComponent();
     }
@@ -282,4 +295,7 @@
 {#if !$areTourDetailsExpanded}
   <button class="absolute top-10 right-6" on:click={finishTour}><img src="/Close_Button.png" alt="Close button" /></button>
 {/if}
-<TourSteps {tourSteps} {title} {activeStep} />
+<TourSteps {tourSteps} {title} {activeStep} {hasActiveStepReached}/>
+{#if $isARActive}
+  <ARFrame url={$activeARURL}/>
+{/if}

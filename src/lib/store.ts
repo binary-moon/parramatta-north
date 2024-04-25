@@ -10,6 +10,8 @@ export const activeFilter = writable('All');
 export const isNavActive = writable(false);
 export const areTourDetailsExpanded = writable(false);
 export const isTourStarted = writable(false);
+export const isARActive = writable(false);
+export const activeARURL = writable('');
 
 export function setTargetLocation(location: Location) {
   targetLocation.set(location);

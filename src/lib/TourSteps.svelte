@@ -7,6 +7,7 @@
   export let tourSteps: ITourStep[] = [];
   export let title: string;
   export let activeStep: number = 1;
+  export let hasActiveStepReached: boolean;
 
   $: translateYValue = $areTourDetailsExpanded ? '0' : '75%';
   $: translateXValue = `calc(-${(activeStep - 1) * 100}% - ${(activeStep - 1) * 6}px)`;
@@ -19,7 +20,7 @@
   <div class="flex h-full gap-[6px] snap-x snap-mandatory" >
     {#each tourSteps as tourStep, index}
       <div class="flex-none w-full h-full snap-start relative">
-        <TourStepDetail details={tourStep} {title} {index}/>
+        <TourStepDetail details={tourStep} {title} {index} isArrived={index + 1 === activeStep && hasActiveStepReached}/>
       </div>
     {/each}
   </div>
