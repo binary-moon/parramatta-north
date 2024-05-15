@@ -17,7 +17,18 @@ export const fetchVideo = async (id: number) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch image:", error)
+    console.error("Failed to fetch video:", error)
+    return null;
+  }
+}
+
+export const fetchAudio = async (id: number) => {
+  try {
+    const response = await fetch(`${apiUrl}/media/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch audio:", error)
     return null;
   }
 }

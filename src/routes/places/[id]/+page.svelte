@@ -11,6 +11,7 @@
   import PlaceMap from '$lib/PlaceMap.svelte';
   import Image from "$lib/Image.svelte";
   import Video from '$lib/Video.svelte';
+  import Audio from '$lib/Audio.svelte';
 
   let isMapView: boolean = false;
   let watchId: number | null = null;
@@ -90,6 +91,9 @@
         </div>
         {#if pageData.video && pageData.video !== ''}
           <Video videoId={pageData.video} classes="mt-6" />
+        {/if}
+        {#if pageData.audio && pageData.audio !== ''}
+          <Audio audioId={pageData.audio} classes="mt-6" />
         {/if}
       </div>
     </div>

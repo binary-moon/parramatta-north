@@ -12,6 +12,7 @@ export const load = (async ({ fetch, params }) => {
     title: data.title.rendered,
     detailImage: data.acf.image,
     video: data.acf.video,
+    audio: data.acf.vo_file,
     mapImage: mapImage,
     location: {
       lat: data.acf.latitude,
