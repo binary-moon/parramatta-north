@@ -17,7 +17,7 @@
   })
 </script>
 {#if video}
-  <video controls preload="metadata" class={classes}>
+  <video controls preload="metadata" class={`${classes} w-full`}>
     <source src={`${video.source_url}#t=0.001`} type={video.mime_type} />
     Your browser does not support the video tag.
   </video>

@@ -9,6 +9,7 @@ export const load = (async ({ fetch }) => {
   const latestNews = data.map(news => {
     return {
       raw: news,
+      id: news.id,
       title: news.title.rendered,
       image: news.acf.image,
       description: news.acf.excerpt,

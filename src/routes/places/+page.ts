@@ -7,6 +7,7 @@ export const load = (async ({fetch}) => {
 
   const places = data.map(place => {
     return {
+      id: place.id,
       raw: place,
       title: place.title.rendered,
       description: place.acf.excerpt,

@@ -11,7 +11,7 @@
 <div class="flex flex-col pt-16 pb-6 -mt-8 relative">
   <h2 class="text-3xl text-primary px-6 font-bold">Latest news</h2>
   <div class="flex flex-col px-6">
-    {#each latestNews as news}
+    {#each latestNews as news (news.id)}
       <NewsCard {...news} />
     {/each}
   </div>

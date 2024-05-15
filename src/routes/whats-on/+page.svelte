@@ -10,7 +10,7 @@
 <div class="flex flex-col gap-6 pt-16 pb-6 -mt-8 relative">
   <h2 class="text-3xl text-primary px-6 font-bold">What's on</h2>
   <div class="flex flex-col px-6 gap-6">
-    {#each whatsOns as whatsOn}
+    {#each whatsOns as whatsOn (whatsOn.id)}
       <Card {...whatsOn} isLargeTitle />
     {/each}
   </div>

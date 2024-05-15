@@ -8,6 +8,7 @@ export const load = (async ({fetch}) => {
   const events = data.map(event => {
     return {
       raw: event,
+      id: event.id,
       title: event.title.rendered,
       subtitle: event.acf.excerpt,
       image: event.acf.image,

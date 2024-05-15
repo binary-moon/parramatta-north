@@ -42,7 +42,7 @@
   <Filter {filterOptions} />
   <div class="px-6">Find and explore places and points of interest at Parramatta North.</div>
   <div class="flex flex-col px-6">
-    {#each filteredPlaces as place}
+    {#each filteredPlaces as place (place.id)}
       <PlacesCard {...place} />
     {/each}
   </div>

@@ -23,7 +23,7 @@
   <Filter {filterOptions} />
   <div class="px-6">Take a self-guided digital tour full of compelling stories and features.</div>
   <div class="flex flex-col px-6 gap-6">
-    {#each filteredTours as tour}
+    {#each filteredTours as tour (tour.id)}
       <Card {...tour} isLargeTitle />
     {/each}
   </div>
