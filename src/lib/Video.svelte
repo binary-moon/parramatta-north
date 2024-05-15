@@ -18,7 +18,7 @@
 </script>
 {#if video}
   <video controls preload="metadata" class={classes}>
-    <source src={video.source_url} type={video.mime_type} />
+    <source src={`${video.source_url}#t=0.001`} type={video.mime_type} />
     Your browser does not support the video tag.
   </video>
 {/if}
