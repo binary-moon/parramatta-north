@@ -85,10 +85,12 @@
         {#if distance}
           <span class="text-primary text-bold text-sm pt-2">{distance} metres away</span>
         {/if}
-        <Video videoId={pageData.video} classes="mt-6" />
         <div class="pt-6 mt-6 border-t-neutral-content border-t-[1px]">
           <Prose>{@html pageData.htmlContent}</Prose>
         </div>
+        {#if pageData.video && pageData.video !== ''}
+          <Video videoId={pageData.video} classes="mt-6" />
+        {/if}
       </div>
     </div>
   {/if}
