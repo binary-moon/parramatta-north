@@ -8,7 +8,7 @@
   import Image from '$lib/Image.svelte';
 
   import { calculateDistance } from '$lib/utilities/calculations';
-  import { fetchImage } from '$lib/utilities/fetchImage';
+  import { fetchImage } from '$lib/utilities/fetchMedia.js';
 
   export let data;
   

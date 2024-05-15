@@ -1,5 +1,5 @@
 import type { PageLoad } from './$types';
-import { fetchImage } from '$lib/utilities/fetchImage';
+import { fetchImage } from '$lib/utilities/fetchMedia';
 
 export const load = (async ({ fetch, params }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -11,6 +11,7 @@ export const load = (async ({ fetch, params }) => {
     raw: data,
     title: data.title.rendered,
     detailImage: data.acf.image,
+    video: data.acf.video,
     mapImage: mapImage,
     location: {
       lat: data.acf.latitude,

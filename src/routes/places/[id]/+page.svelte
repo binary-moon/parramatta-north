@@ -9,6 +9,7 @@
   import Button from '$lib/Button.svelte';
   import PlaceMap from '$lib/PlaceMap.svelte';
   import Image from "$lib/Image.svelte";
+  import Video from '$lib/Video.svelte';
 
   let isMapView: boolean = false;
   let watchId: number | null = null;
@@ -21,6 +22,8 @@
   export let data: PageData;
 
   const { pageData } = data;
+
+  console.log({pageData})
 
   const toggleMap = () => {
     isMapView = !isMapView;
@@ -64,6 +67,7 @@
         {#if distance}
           <span class="text-primary text-bold text-sm pt-2">{distance} metres away</span>
         {/if}
+        <Video videoId={pageData.video} classes="mt-6" />
         <div class="pt-6 mt-6 border-t-neutral-content border-t-[1px]">
           <Prose>{@html pageData.htmlContent}</Prose>
         </div>

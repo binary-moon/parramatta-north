@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { fetchImage } from './utilities/fetchImage';
+  import { fetchImage } from './utilities/fetchMedia';
 
   export let classes = '';
   export let imageId: number;
