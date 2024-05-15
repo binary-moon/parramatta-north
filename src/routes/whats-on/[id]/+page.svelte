@@ -7,8 +7,12 @@
   import WhatsOnMap from '$lib/WhatsOnMap.svelte';
   import Image from '$lib/Image.svelte';
 
+  import { isPageScrolled } from '$lib/store';
+
   import { calculateDistance } from '$lib/utilities/calculations';
   import { fetchImage } from '$lib/utilities/fetchMedia.js';
+
+  let scrollDiv: HTMLDivElement;
 
   export let data;
   
@@ -45,6 +49,10 @@
     if (!arePlacesFetched) return false;
     isMapView = !isMapView;
   }
+
+  const handleScroll = () => {
+    isPageScrolled.set(scrollDiv.scrollTop > 50);
+  };
 
   onMount(() => {
     fetchPlaces().then(data => {
@@ -86,9 +94,18 @@
       }
     })
 
+    if (scrollDiv) {
+      scrollDiv.addEventListener('scroll', handleScroll);
+    }
+
     return () => {
       if (watchId) {
         navigator.geolocation.clearWatch(watchId);
+      }
+
+      isPageScrolled.set(false);
+      if (scrollDiv) {
+        scrollDiv.removeEventListener('scroll', handleScroll);
       }
     }
   });
@@ -99,7 +116,7 @@
     <button class="absolute top-10 left-[50%] -translate-x-[50%] text-[16px]/[16px] font-bold bg-white py-3 px-3 rounded-full shadow-md" on:click={toggleMapView}>See list view</button>
   </div>
 {:else}
-  <div class="flex flex-col w-full h-full absolute top-0 left-0 bg-white overflow-y-scroll">
+  <div bind:this={scrollDiv} class="flex flex-col w-full h-full absolute top-0 left-0 bg-white overflow-y-scroll">
     <div class="relative">
       <Image imageId={detailImage} placeholderImage={detailImagePlaceholder} alt={title} imageSize="full" />
       <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.00) 70%);"></div>

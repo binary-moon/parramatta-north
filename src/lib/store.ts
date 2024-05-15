@@ -12,6 +12,7 @@ export const areTourDetailsExpanded = writable(false);
 export const isTourStarted = writable(false);
 export const isARActive = writable(false);
 export const activeARURL = writable('');
+export const isPageScrolled = writable(false);
 
 export function setTargetLocation(location: Location) {
   targetLocation.set(location);

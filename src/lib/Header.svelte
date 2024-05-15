@@ -2,7 +2,7 @@
   import NavigationButton  from "./NavigationButton.svelte";
   import Navigation  from "./Navigation.svelte";
 
-  import { isNavActive} from '$lib/store';
+  import { isNavActive, isPageScrolled } from '$lib/store';
 
   export let isHomePage = false;
   export let isWhiteLogo = false;
@@ -12,7 +12,7 @@
   }
 
   $: logoClasses = !isHomePage ? 'w-[143px]' : '';
-  $: headerClasses= `flex flex-col justify-between py-16 px-6 gap-6 ${!isHomePage ? 'pb-8' : ''}`
+  $: headerClasses= `flex flex-col justify-between py-16 px-6 gap-6 ${!isHomePage ? 'pb-8' : ''} ${$isPageScrolled ? 'opacity-0' : '' }`
 </script>
 
 <header class={headerClasses}>

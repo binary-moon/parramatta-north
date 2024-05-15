@@ -2,6 +2,7 @@
   import type { PageData } from './$types';
   import { onMount } from 'svelte';
 
+  import { isPageScrolled } from '$lib/store';
   import { loadScript } from '$lib/utilities/loadScript';
 
   import Pill from '$lib/Pill.svelte';
@@ -18,6 +19,8 @@
   let isGoogleMapsLoaded: boolean = false;
   const detailImagePlaceholder = 'https://placehold.co/1284x1080/black/333';
   const mapImagePlaceholder = 'https://placehold.co/255x255/black/333';
+
+  let scrollDiv: HTMLDivElement;
   
   export let data: PageData;
 
@@ -28,6 +31,10 @@
   const toggleMap = () => {
     isMapView = !isMapView;
   }
+
+  const handleScroll = () => {
+    isPageScrolled.set(scrollDiv.scrollTop > 50);
+  };
 
   onMount(() => {
     loadScript(`https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=geometry`, async () => {
@@ -40,6 +47,17 @@
         }, null, { enableHighAccuracy: true });
       }
     });
+
+    if (scrollDiv) {
+      scrollDiv.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      isPageScrolled.set(false);
+      if (scrollDiv) {
+        scrollDiv.removeEventListener('scroll', handleScroll);
+      }
+    };
   })
 </script>
 {#if pageData}
@@ -48,7 +66,7 @@
       <PlaceMap location={pageData.location} title={pageData.title} image={pageData.mapImage || mapImagePlaceholder} />
     </div>
   {:else}
-    <div class="flex flex-col w-full h-full absolute top-0 left-0 bg-white overflow-y-scroll pb-[100px]">
+    <div bind:this={scrollDiv} class="flex flex-col w-full h-full absolute top-0 left-0 bg-white overflow-y-scroll pb-[100px]">
       <div class="relative">
         <Image imageId={pageData.detailImage} placeholderImage={detailImagePlaceholder} alt={pageData.title} />
         <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.00) 70%);"></div>
