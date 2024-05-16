@@ -19,7 +19,7 @@ export const load = (async ({ fetch, params }) => {
       lng: data.acf.longitude,
     },
     tags: data.tags.map(tag => tag.name),
-    htmlContent: data.acf.description,
+    htmlContent: data.description,
   }
 
   return { 

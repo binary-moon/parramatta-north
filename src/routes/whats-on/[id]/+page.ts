@@ -13,7 +13,7 @@ export const load = (async ({ fetch, params }) => {
     detailImage: data.acf.image,
     dateStart: formatStringToDateDDMMMYYYY(data.acf.date_start),
     dateEnd: formatStringToDateDDMMMYYYY(data.acf.date_end),
-    htmlContent: data.acf.description,
+    htmlContent: data.description,
     places: data.acf.places_included,
   }
 

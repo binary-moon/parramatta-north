@@ -12,7 +12,7 @@ export const load = (async ({fetch, params}) => {
     title: data.title.rendered,
     detailImage: data.acf.image,
     date: formatDateDDMMMYYYY(data.date),
-    htmlContent: data.acf.description,
+    htmlContent: data.description,
   }
 
   return { 
