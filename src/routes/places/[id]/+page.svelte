@@ -4,6 +4,7 @@
 
   import { isPageScrolled } from '$lib/store';
   import { loadScript } from '$lib/utilities/loadScript';
+  import { updateVideoTags } from '$lib/utilities/htmlParser';
 
   import Pill from '$lib/Pill.svelte';
   import Prose from '$lib/Prose.svelte';
@@ -24,8 +25,9 @@
   let scrollDiv: HTMLDivElement;
   
   export let data: PageData;
-
   const { pageData } = data;
+
+  let parsedHTML: string;
 
   console.log({pageData})
 
@@ -52,6 +54,8 @@
     if (scrollDiv) {
       scrollDiv.addEventListener('scroll', handleScroll);
     }
+
+    parsedHTML = updateVideoTags(pageData.htmlContent);
 
     return () => {
       isPageScrolled.set(false);
@@ -86,9 +90,11 @@
         {#if distance}
           <span class="text-primary text-bold text-sm pt-2">{distance} metres away</span>
         {/if}
-        <div class="pt-6 mt-6 border-t-neutral-content border-t-[1px]">
-          <Prose>{@html pageData.htmlContent}</Prose>
-        </div>
+        {#if parsedHTML}
+          <div class="pt-6 mt-6 border-t-neutral-content border-t-[1px]">
+            <Prose>{@html parsedHTML}</Prose>
+          </div>
+        {/if}
         {#if pageData.video && pageData.video !== ''}
           <Video videoId={pageData.video} classes="mt-6" />
         {/if}
