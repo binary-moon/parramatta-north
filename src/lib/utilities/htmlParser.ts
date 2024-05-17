@@ -3,6 +3,23 @@ export const updateVideoTags = (html: string): string => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
 
+    // Remove all div.wp-video elements
+    const wpVideoDivs = doc.querySelectorAll<HTMLDivElement>('div.wp-video');
+    wpVideoDivs.forEach(div => {
+      const videoElement = div.querySelector('video');
+      if (videoElement) {
+        div.parentNode?.replaceChild(videoElement, div);
+      }
+    });
+
+    // Remove IE9 specific tags
+    const ie9Scripts = doc.querySelectorAll('script');
+    ie9Scripts.forEach(script => {
+      if (script.textContent?.includes('document.createElement(\'video\')')) {
+        script.parentNode?.removeChild(script);
+      }
+    });
+
     const videoTags = doc.querySelectorAll<HTMLVideoElement>('video');
     videoTags.forEach(video => {
       const width = video.getAttribute('width');
