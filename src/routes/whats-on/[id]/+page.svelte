@@ -11,6 +11,7 @@
 
   import { calculateDistance } from '$lib/utilities/calculations';
   import { fetchImage } from '$lib/utilities/fetchMedia.js';
+  import { updateVideoTags } from '$lib/utilities/htmlParser.js';
 
   let scrollDiv: HTMLDivElement;
 
@@ -25,6 +26,7 @@
   let arePlacesFetched = false;
   let watchId: number | null;
   let isMapView: boolean = false;
+  let parsedHTML: string;
 
   const fetchPlaces = async () => {
     try {
@@ -98,6 +100,8 @@
       scrollDiv.addEventListener('scroll', handleScroll);
     }
 
+    parsedHTML = updateVideoTags(htmlContent);
+
     return () => {
       if (watchId) {
         navigator.geolocation.clearWatch(watchId);
@@ -135,7 +139,7 @@
         {/if}
       </div>
       <div class="pt-6 mt-6 border-t-neutral-content border-t-[1px]">
-        <Prose>{@html htmlContent}</Prose>
+        <Prose>{@html parsedHTML}</Prose>
       </div>
       <div class="flex justify-center py-8">
         <Button handleClick={toggleMapView}>

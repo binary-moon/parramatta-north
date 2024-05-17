@@ -1,8 +1,11 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   import Button from './Button.svelte';
   import Prose from './Prose.svelte';
   import Image from './Image.svelte';
 
+  import { updateVideoTags } from './utilities/htmlParser';
   import { areTourDetailsExpanded, isARActive, activeARURL } from "./store";
 
   import type { ITourStep } from './types';
@@ -13,6 +16,8 @@
   export let isArrived: boolean;
 
   console.log(details)
+
+  let parsedHTML: string;
 
   const imagePlaceholder = "https://placehold.co/760x640/black/333";
   const { title: placeTitle, whenArrived, beforeArrival, content, image, audioLink, arLink } = details;
@@ -54,6 +59,9 @@
     }
   }
 
+  onMount(() => {
+    parsedHTML = updateVideoTags(content);
+  });
 </script>
 <button class="flex flex-col items-stretch w-full h-full bg-white rounded-[5px] px-6 pt-11 pb-4 overflow-y-scroll text-left" on:click={handleDetailToggle}>
   <div class="w-20 h-1 bg-[#495054] rounded absolute top-4 left-1/2 -translate-x-1/2"></div>
@@ -91,7 +99,7 @@
       </Button>
     {/if}
     <div class="mt-6">
-      <Prose>{@html content}</Prose>
+      <Prose>{@html parsedHTML}</Prose>
     </div>
   {/if}
   <Button buttonStyle="primary" additionalClasses="mt-2" handleClick={handleArClick}>Test AR - will remove</Button>

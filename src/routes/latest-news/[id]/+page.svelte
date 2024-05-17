@@ -6,8 +6,10 @@
     import Image from '$lib/Image.svelte';
 
     import { isPageScrolled } from '$lib/store';
+    import { updateVideoTags } from '$lib/utilities/htmlParser';
 
     let scrollDiv: HTMLDivElement;
+    let parsedHTML: string;
     
     export let data: PageData;
 
@@ -23,6 +25,8 @@
       if (scrollDiv) {
         scrollDiv.addEventListener('scroll', handleScroll);
       }
+
+      parsedHTML = updateVideoTags(htmlContent);
 
       return () => {
         isPageScrolled.set(false);
@@ -43,7 +47,7 @@
     <span class="text-primary text-bold text-sm pt-2">{date}</span>
     <h1 class="text-3xl font-bold pt-[18px]">{title}</h1>
     <div class="pt-6 mt-6 border-t-neutral-content border-t-[1px]">
-      <Prose>{@html htmlContent}</Prose>
+      <Prose>{@html parsedHTML}</Prose>
     </div>
   </div>
 </div>
