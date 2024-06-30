@@ -104,7 +104,7 @@
       </div>
     </div>
   {/if}
-  <div class="flex flex-col fixed px-6 pb-[60px] bottom-0 left-0 w-full z-50">
+  <!-- <div class="flex flex-col fixed px-6 pb-[60px] bottom-0 left-0 w-full z-50">
     <Button handleClick={toggleMap}>{isMapView ? 'Close map' : 'See on map'}</Button>
-  </div>
+  </div> -->
 {/if}
