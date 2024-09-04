@@ -16,12 +16,13 @@
         });
     });
     await Promise.all(imports);
+    console.log({pageData, components })
   });
 </script>
 
 <!-- Render the dynamically imported components -->
-{#each pageData as { componentType, props }}
-  {#if components[componentType]}
+{#each pageData as { componentType, props, raw }}
+  {#if components[componentType] && raw && raw.length !== 0}
     <svelte:component this={components[componentType]} {...props} />
   {/if}
 {/each}
