@@ -4,7 +4,9 @@
 
   import { isNavActive} from '$lib/store';
 
-  const data = 
+  const theme = import.meta.env.VITE_THEME;
+
+  const parramattaNorthData = 
   {
     primary: [
       {
@@ -48,6 +50,40 @@
     ]
   }
 
+  const rgbData = 
+  {
+    primary: [],
+    secondary: [
+      {
+        title: 'Home',
+        url: '/',
+      },
+      {
+        title: 'Registrar General\'s Building Tour',
+        url: '/tours/375', 
+      },
+      {
+        title: 'About Macquarie Street East',
+        url: '/pages/2',
+      },
+      {
+        title: 'Acknowledgement of Country',
+        url: '/acknowledgement',
+      },
+      {
+        title: 'Registrar General\'s Building Stories',
+        url: '/places',
+      }
+    ]
+  }
+
+  let data = {}
+  if (theme === 'parramattaNorth') {
+    data = parramattaNorthData;
+  } else if (theme === 'rgb') {
+    data = rgbData;
+  }
+
   const handleClick = () => {
     isNavActive.set(false);
   }
@@ -59,7 +95,12 @@
     class="bg-primary absolute top-0 left-0 w-full h-full py-16 px-6 z-20"
     transition:fly={{ delay: 0, duration: 300, easing: cubicOut }}
   >
+    {#if theme === 'parramattaNorth'}
     <img src="/Logo_Parramatta_North_On_Colour.svg" alt="Paramatta North">
+    {/if}
+    {#if theme === 'rgb'}
+    <img src="/Logo_RGB_Small_White.svg" alt="RGB">
+    {/if}
     <ul class="flex flex-col gap-4 mt-20">
       {#each data.primary as { title, url }, i}
         <li>
@@ -74,7 +115,7 @@
         </li>
       {/each}
     </ul>
-    <img src="/Top_Line.svg" alt="decoration 1" class="absolute top-[143px] right-0">
+    <img src="/Top_Line.svg" alt="decoration 1" class="absolute top-[163px] right-0">
     <img src="/Bottom_Line.svg" alt="decoration 2" class="absolute bottom-0">
   </nav>
 {/if}

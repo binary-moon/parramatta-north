@@ -18,6 +18,6 @@
       </div>
       <Image imageId={image} placeholderImage={placeholderImage} alt={title} classes="w-[132px] rounded-[30px] block"/>
     </div>
-    <span class="text-base">{description}</span>
+    <span class="text-base">{@html description}</span>
   </div>
 </a>

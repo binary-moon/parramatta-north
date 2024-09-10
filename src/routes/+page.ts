@@ -6,20 +6,24 @@ export const load = (async ({ fetch }) => {
   const toursEndpoint = `${apiUrl}/tour/`;
   const newsEndpoint = `${apiUrl}/news/`;
   const eventsEndpoint = `${apiUrl}/event/`;
+  const pagesEndpoint = `${apiUrl}/pages/`;
 
-  const [toursResponse, newsResponse, eventsResponse] = await Promise.all([
-    fetch(toursEndpoint),
-    fetch(newsEndpoint),
-    fetch(eventsEndpoint),
-  ]);
+  const [toursResponse, newsResponse, eventsResponse, pagesResponse] =
+    await Promise.all([
+      fetch(toursEndpoint),
+      fetch(newsEndpoint),
+      fetch(eventsEndpoint),
+      fetch(pagesEndpoint),
+    ]);
 
   const toursData = await toursResponse.json();
   const newsData = await newsResponse.json();
   const eventsData = await eventsResponse.json();
+  const pagesData = await pagesResponse.json();
+
+  console.log({ pagesData });
 
   const primaryTour = toursData[0];
-
-  console.log({ primaryTour });
 
   const events = eventsData.map((event) => {
     return {
@@ -54,6 +58,17 @@ export const load = (async ({ fetch }) => {
       image: tour.acf?.image,
       href: `/tours/${tour.id}`,
       tags: tour.tags?.map((tag) => tag.name),
+    };
+  });
+
+  const pages = pagesData.map((page) => {
+    return {
+      raw: page,
+      title: page.title?.rendered,
+      description: page.excerpt?.rendered,
+      image: page.featured_media,
+      date: "",
+      href: `/pages/${page.id}`,
     };
   });
 
@@ -95,6 +110,15 @@ export const load = (async ({ fetch }) => {
           title: "Tours",
           moreLink: "/tours",
           items: tours,
+        },
+      },
+      {
+        componentType: "PagesHome",
+        raw: pagesData,
+        props: {
+          title: "Pages",
+          moreLink: "/pages",
+          items: pages,
         },
       },
     ],

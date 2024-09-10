@@ -11,6 +11,8 @@
   export let isLargeTitle: boolean = false;
 
   const placeholderImage = "https://placehold.co/1080x1080/black/333";
+
+  import { decodeHtmlEntities } from "./utilities/htmlParser";
 </script>
 <a href={href}>
   <BackgroundImage 
@@ -27,7 +29,7 @@
         </div>
       {/if}
       {#if title}
-        <h1 class={`text-white ${isLargeTitle ? 'text-3xl' : 'text-[22px]/[28px]'} text-3xl font-bold`}>{title}</h1>
+        <h1 class={`text-white ${isLargeTitle ? 'text-3xl' : 'text-[22px]/[28px]'} text-3xl font-bold`}>{decodeHtmlEntities(title)}</h1>
       {/if}
       {#if subtitle}
         <span class="text-white text-sm">{subtitle}</span>

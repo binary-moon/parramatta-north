@@ -102,5 +102,4 @@
       <Prose>{@html parsedHTML}</Prose>
     </div>
   {/if}
-  <Button buttonStyle="primary" additionalClasses="mt-2" handleClick={handleArClick}>Test AR - will remove</Button>
 </button>
