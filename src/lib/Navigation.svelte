@@ -63,6 +63,10 @@
         url: '/tours/375', 
       },
       {
+        title: 'Registrar General\'s Building Stories',
+        url: '/places',
+      },
+      {
         title: 'About Macquarie Street East',
         url: '/pages/2',
       },
@@ -70,10 +74,6 @@
         title: 'Acknowledgement of Country',
         url: '/acknowledgement',
       },
-      {
-        title: 'Registrar General\'s Building Stories',
-        url: '/places',
-      }
     ]
   }
 

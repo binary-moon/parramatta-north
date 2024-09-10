@@ -40,7 +40,7 @@
     </a>
     <NavigationButton isNavActive={$isNavActive} toggleNavigation={toggleNavigation}/>
   </div>
-  {#if isHomePage}
+  {#if isHomePage && theme === 'parramattaNorth'}
     <p>Explore and discover a new and emerging destination - a place of compelling stories, connecting Country and community.</p>
   {/if}
 </header>
