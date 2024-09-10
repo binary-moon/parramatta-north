@@ -67,7 +67,7 @@
   <div class="w-20 h-1 bg-[#495054] rounded absolute top-4 left-1/2 -translate-x-1/2"></div>
   <div class="flex gap-2">
     <span class="w-[26px] h-[26px] bg-primary rounded-full text-white text-sm/[26px] font-bold text-center">{index + 1}</span>
-    <span class="text-primary text-sm/[26px] font-bold">{title}</span>
+    <span class="text-primary text-sm/[26px] font-bold">{@html title}</span>
   </div>
   <h4 class="text-[22px]/[28px] font-bold mt-3">{placeTitle}</h4>
   {#if isArrived}

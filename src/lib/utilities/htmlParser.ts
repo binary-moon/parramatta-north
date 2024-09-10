@@ -55,6 +55,9 @@ export const updateVideoTags = (html: string): string => {
 };
 
 export const decodeHtmlEntities = (text: string) => {
+  if (typeof window === "undefined") {
+    return "";
+  }
   const textArea = document.createElement("textarea");
   textArea.innerHTML = text;
   return textArea.value;
