@@ -6,6 +6,15 @@
   import { calculateDistance } from '$lib/utilities/calculations';
   import type { IPlace } from '$lib/types';
 
+  const theme = import.meta.env.VITE_THEME;
+
+  let title = ''
+  if (theme === 'parramattaNorth') {
+    title = 'Find and explore places and points of interest at Parramatta North.'
+  } else if (theme === 'rgb') {
+    title = 'Find and explore places and points of interest at Registrar General\'s Bulding.'
+  }
+
   export let data;
   const { places: originalPlaces, filterOptions } = data;
 
@@ -40,7 +49,7 @@
 
 <div class="flex flex-col gap-6 pb-6 relative">
   <Filter {filterOptions} />
-  <div class="px-6">Find and explore places and points of interest at Parramatta North.</div>
+  <div class="px-6">{title}</div>
   <div class="flex flex-col px-6">
     {#each filteredPlaces as place (place.id)}
       <PlacesCard {...place} />
