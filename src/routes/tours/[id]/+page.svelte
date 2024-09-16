@@ -76,11 +76,13 @@
     >
       <div class="w-full h-full absolute top-0 left-0 flex flex-col justify-end" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.80) 80.35%)">
         {#if theme === "rgb"}
-          <img src="/RGB_Line_Tour_Landing_Top.svg" alt="Promo decoration" class="absolute top-0 right-0 z-0">
+          <img src="/RGB_Line_Tour_Landing_Top.svg" alt="Promo decoration" class="absolute h-[55vh] top-0 right-0 z-0">
           <img src="/RGB_Line_Tour_Landing_Bottom.svg" alt="Promo decoration" class="absolute bottom-0 left-0 z-0">
         {/if}
         <div class="flex flex-col p-6 pb-[62px]">
-          <a href="/tours" class="flex gap-2 font-semibold"><img src="/White_Arrow.svg"> See all tours</a>
+          {#if theme !== "rgb"}
+            <a href="/tours" class="flex gap-2 font-semibold"><img src="/White_Arrow.svg"> See all tours</a>
+          {/if}
           <h1 class="text-5xl/[58px] font-bold mt-3">{decodeHtmlEntities(pageData.title)}</h1>
           <span class="text-sm mt-3">{pageData.subtitle}</span>
           <div class="flex flex-wrap gap-3 mt-5">

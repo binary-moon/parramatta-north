@@ -59,11 +59,11 @@
         url: '/',
       },
       {
-        title: 'Registrar General\'s Building Tour',
+        title: 'Take the tour',
         url: '/tours/375', 
       },
       {
-        title: 'Registrar General\'s Building Stories',
+        title: 'Stories from the tour',
         url: '/places',
       },
       {
@@ -99,7 +99,7 @@
     <img src="/Logo_Parramatta_North_On_Colour.svg" alt="Paramatta North">
     {/if}
     {#if theme === 'rgb'}
-    <img src="/Logo_RGB_Small_White.svg" alt="RGB">
+    <img src="/Logo_RGB_Small_White.svg" alt="RGB" class="w-[54dw]">
     {/if}
     <ul class="flex flex-col gap-4 mt-20">
       {#each data.primary as { title, url }, i}

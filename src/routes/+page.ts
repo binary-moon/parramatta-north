@@ -65,8 +65,8 @@ export const load = (async ({ fetch }) => {
     return {
       raw: page,
       title: page.title?.rendered,
-      description: page.excerpt?.rendered,
-      image: page.featured_media,
+      description: page.acf?.excerpt,
+      image: page.acf?.image,
       date: "",
       href: `/pages/${page.id}`,
     };
