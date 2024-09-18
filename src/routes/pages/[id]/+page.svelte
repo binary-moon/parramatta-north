@@ -17,6 +17,8 @@
 
     const { detailImage, title, htmlContent } = data.pageData;
 
+    console.log(data)
+
     const handleScroll = () => {
       isPageScrolled.set(scrollDiv.scrollTop > 50);
     };

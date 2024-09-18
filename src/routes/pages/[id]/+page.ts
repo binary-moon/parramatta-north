@@ -8,7 +8,7 @@ export const load = (async ({ fetch, params }) => {
   const pageData = {
     raw: data,
     title: data.title.rendered,
-    detailImage: data.featured_media,
+    detailImage: data.acf.image,
     htmlContent: data.content.rendered,
   };
 

@@ -20,6 +20,10 @@
   let parsedHTML: string;
   let startY: number = 0;
   let endY: number = 0;
+  let startTime: number = 0;
+  
+  const tapThreshold = 10; // Maximum distance to consider it a tap
+  const timeThreshold = 300; // Maximum time (in ms) to consider it a quick tap
 
   const imagePlaceholder = "https://placehold.co/760x640/black/333";
   const { title: placeTitle, whenArrived, beforeArrival, content, image, audioLink, arLink } = details;
@@ -30,7 +34,8 @@
   }
 
   const handleDetailToggle = () => {
-    areTourDetailsExpanded.set(!$areTourDetailsExpanded)
+    console.log('Detail Toggle');
+    areTourDetailsExpanded.set(!$areTourDetailsExpanded);
   }
 
   const handleArClick = async (event: MouseEvent) => {
@@ -48,7 +53,6 @@
           isARActive.set(true);
           activeARURL.set(arLink);
         } else {
-          // Permissions denied, handle accordingly (e.g., show an error message)
           console.error('Gyroscope permission denied');
         }
       } else {
@@ -63,31 +67,42 @@
 
   const handleTouchStart = (event: TouchEvent) => {
     startY = event.touches[0].clientY;
+    endY = startY; // Reset endY to avoid retaining old values
+    startTime = new Date().getTime();
   };
 
   const handleTouchEnd = () => {
-    const swipeThreshold = 50; // Minimum swipe distance to consider it a swipe
-    const swipeDistance = endY - startY;
+    const swipeDistance = Math.abs(endY - startY);
+    const elapsedTime = new Date().getTime() - startTime;
 
-    if (swipeDistance < -swipeThreshold) {
-      // Swipe up
-      areTourDetailsExpanded.set(true)
-    } else if (swipeDistance > swipeThreshold) {
-      // Swipe down
-      areTourDetailsExpanded.set(false)
+    console.log(swipeDistance, elapsedTime)
+
+    if (swipeDistance < tapThreshold && elapsedTime < timeThreshold) {
+      console.log('Tap');
+      // It's a tap, not a swipe
+      handleDetailToggle();
+    } else if (swipeDistance >= tapThreshold) {
+      // Handle swipe
+      if (endY - startY < -tapThreshold) {
+        // Swipe up
+        areTourDetailsExpanded.set(true);
+      } else if (endY - startY > tapThreshold) {
+        // Swipe down
+        areTourDetailsExpanded.set(false);
+      }
     }
   };
 
   const handleTouchMove = (event: TouchEvent) => {
-    endY = event.touches[0].clientY;
+    endY = event.touches[0].clientY; // Update endY during move
   };
 
   onMount(() => {
     parsedHTML = updateVideoTags(content);
   });
 </script>
+
 <button class="flex flex-col items-stretch w-full h-full bg-white rounded-[5px] px-6 pt-11 pb-4 overflow-y-scroll text-left" 
-  on:click={handleDetailToggle} 
   on:touchstart={handleTouchStart}
   on:touchmove={handleTouchMove}
   on:touchend={handleTouchEnd}>
