@@ -18,6 +18,8 @@
   console.log(details)
 
   let parsedHTML: string;
+  let startY: number = 0;
+  let endY: number = 0;
 
   const imagePlaceholder = "https://placehold.co/760x640/black/333";
   const { title: placeTitle, whenArrived, beforeArrival, content, image, audioLink, arLink } = details;
@@ -59,11 +61,36 @@
     }
   }
 
+  const handleTouchStart = (event: TouchEvent) => {
+    startY = event.touches[0].clientY;
+  };
+
+  const handleTouchEnd = () => {
+    const swipeThreshold = 50; // Minimum swipe distance to consider it a swipe
+    const swipeDistance = endY - startY;
+
+    if (swipeDistance < -swipeThreshold) {
+      // Swipe up
+      areTourDetailsExpanded.set(true)
+    } else if (swipeDistance > swipeThreshold) {
+      // Swipe down
+      areTourDetailsExpanded.set(false)
+    }
+  };
+
+  const handleTouchMove = (event: TouchEvent) => {
+    endY = event.touches[0].clientY;
+  };
+
   onMount(() => {
     parsedHTML = updateVideoTags(content);
   });
 </script>
-<button class="flex flex-col items-stretch w-full h-full bg-white rounded-[5px] px-6 pt-11 pb-4 overflow-y-scroll text-left" on:click={handleDetailToggle}>
+<button class="flex flex-col items-stretch w-full h-full bg-white rounded-[5px] px-6 pt-11 pb-4 overflow-y-scroll text-left" 
+  on:click={handleDetailToggle} 
+  on:touchstart={handleTouchStart}
+  on:touchmove={handleTouchMove}
+  on:touchend={handleTouchEnd}>
   <div class="w-20 h-1 bg-[#495054] rounded absolute top-4 left-1/2 -translate-x-1/2"></div>
   <div class="flex gap-2">
     <span class="w-[26px] h-[26px] bg-primary rounded-full text-white text-sm/[26px] font-bold text-center">{index + 1}</span>

@@ -24,6 +24,14 @@ export default {
               width: "100%",
               margin: "16px 0",
             },
+            iframe: {
+              display: "block",
+              width: "100%",
+              margin: "16px 0",
+            },
+            h6: {
+              fontSize: "14px",
+            },
           },
         },
         rgb: {
@@ -45,6 +53,14 @@ export default {
               display: "block",
               width: "100%",
               margin: "16px 0",
+            },
+            iframe: {
+              display: "block",
+              width: "100%",
+              margin: "16px 0",
+            },
+            h6: {
+              fontSize: "14px",
             },
           },
         },

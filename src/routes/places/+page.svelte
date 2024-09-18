@@ -48,7 +48,10 @@
 </script>
 
 <div class="flex flex-col gap-6 pb-6 relative">
-  <Filter {filterOptions} />
+  {#if theme !== 'rgb'}
+    <Filter {filterOptions} />
+  {/if}
+  
   <div class="px-6">{title}</div>
   <div class="flex flex-col px-6">
     {#each filteredPlaces as place (place.id)}
