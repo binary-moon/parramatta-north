@@ -22,6 +22,8 @@
   const detailImagePlaceholder = 'https://placehold.co/1284x1080/black/333';
   const mapImagePlaceholder = 'https://placehold.co/255x255/black/333';
 
+  const theme = import.meta.env.VITE_THEME;
+
   let scrollDiv: HTMLDivElement;
   
   export let data: PageData;
@@ -75,7 +77,12 @@
       <div class="relative">
         <Image imageId={pageData.detailImage} placeholderImage={detailImagePlaceholder} alt={pageData.title} />
         <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.00) 70%);"></div>
-        <img src="/Whats_On_Deco.svg" alt="Promo decoration" class="absolute -bottom-12 right-0">
+        {#if theme === 'northParramatta'}
+         <img src="/Whats_On_Deco.svg" alt="Promo decoration" class="absolute -bottom-12 right-0">
+        {/if}
+        {#if theme === 'rgb'}
+         <img src="/RGB_News_Line.svg" alt="Promo decoration" class="absolute -bottom-12 right-0">
+        {/if}
       </div>
       <div class="px-6 py-9">
         <a href="/places" class="flex gap-2 font-semibold text-lg"><img src="/Black_Arrow.svg"> All Places</a>

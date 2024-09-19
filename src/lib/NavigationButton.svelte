@@ -2,7 +2,7 @@
   export let isNavActive = false
   export let toggleNavigation = () => {}
 </script>
-<button on:click={toggleNavigation} class="z-30">
+<button on:click={toggleNavigation} class="z-30 absolute top-16 right-4">
   {#if isNavActive}
     <img src="/Global_Nav_Burger_Close.svg" alt="Close navigation button">
   {:else}

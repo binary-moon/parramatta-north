@@ -26,7 +26,7 @@
     isNavActive.set(!$isNavActive)
   }
 
-  $: logoClasses = !isHomePage ? smallLogoWidth : '';
+  $: logoClasses = !isHomePage ? smallLogoWidth : 'max-w-[300px]';
   $: headerClasses= `flex flex-col justify-between py-16 px-6 gap-6 ${!isHomePage ? 'pb-8' : ''} ${$isPageScrolled ? 'opacity-0' : '' }`
 </script>
 
