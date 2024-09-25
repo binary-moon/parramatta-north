@@ -7,6 +7,7 @@
 
   import { isAcknowledgementVisible } from './store';
 
+  let imageLoaded = false; // Track image loading status
   const detailImagePlaceholder = 'https://placehold.co/2000x2000/black/333'
 
   const handleAudioClick = (event: MouseEvent) => {
@@ -17,7 +18,13 @@
   const handleContinue = () => {
     isAcknowledgementVisible.set(false);
   }
+
+  // Trigger the display of modal only after the image is loaded
+  function handleImageLoad() {
+    imageLoaded = true;
+  }
 </script>
+{#if imageLoaded}
 <div class="flex w-full h-full absolute top-0 left-0 text-white" transition:scale={{ duration: 600, opacity: 0, start: 0.8, easing: quintOut}}>
   <BackgroundImage
     classes="flex w-full h-full absolute top-0 left-0 text-white"
@@ -41,3 +48,10 @@
     </div>
   </BackgroundImage>
 </div>
+{/if}
+<img 
+  src="/AoC_Image.png" 
+  alt="Hidden AoC Image" 
+  on:load={handleImageLoad} 
+  class="hidden" 
+/>
