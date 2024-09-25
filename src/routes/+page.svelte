@@ -1,6 +1,8 @@
 <script>
   import { onMount } from 'svelte';
 
+  import { isAcknowledgementVisible, hasAcknowledgementBeenSeen } from '$lib/store.ts';
+
   let components = {};
 
   export let data;
@@ -17,6 +19,18 @@
     });
     await Promise.all(imports);
     console.log({pageData, components })
+
+    // Check if acknowledgement has been seen and toggle visibility accordingly
+    let hasBeenSeen;
+    hasAcknowledgementBeenSeen.subscribe(value => hasBeenSeen = value);
+
+    if (!hasBeenSeen) {
+      // Wait for 5 seconds before showing the acknowledgement
+      setTimeout(() => {
+        isAcknowledgementVisible.set(true);
+        hasAcknowledgementBeenSeen.set(true); // Set the flag so it won't show again
+      }, 1000);
+    }
   });
 </script>
 

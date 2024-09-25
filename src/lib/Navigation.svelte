@@ -3,6 +3,7 @@
   import { cubicOut } from 'svelte/easing';
 
   import { isNavActive} from '$lib/store';
+  import { isAcknowledgementVisible } from '$lib/store';
 
   const theme = import.meta.env.VITE_THEME;
 
@@ -84,8 +85,12 @@
     data = rgbData;
   }
 
-  const handleClick = () => {
+  const handleClick = (event: any, title: string) => {
     isNavActive.set(false);
+    if (title === 'Acknowledgement of Country') {
+      event.preventDefault();
+      isAcknowledgementVisible.set(true);
+    }
   }
   
 </script>
@@ -104,14 +109,14 @@
     <ul class="flex flex-col gap-4 mt-20">
       {#each data.primary as { title, url }, i}
         <li>
-          <a  href={url} class="text-white text-3xl" on:click={handleClick}>{title}</a>
+          <a  href={url} class="text-white text-3xl" on:click={(e) => handleClick(e, title)}>{title}</a>
         </li>
       {/each}
     </ul>
     <ul class="flex flex-col gap-4 mt-16">
       {#each data.secondary as { title, url }, i}
         <li>
-          <a  href={url} class="text-white text-lg" on:click={handleClick}>{title}</a>
+          <a  href={url} class="text-white text-lg" on:click={(e) => handleClick(e, title)}>{title}</a>
         </li>
       {/each}
     </ul>
