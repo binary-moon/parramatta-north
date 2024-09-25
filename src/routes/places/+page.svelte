@@ -9,7 +9,7 @@
   const theme = import.meta.env.VITE_THEME;
 
   let title = ''
-  if (theme === 'parramattaNorth') {
+  if (theme === 'parramatta-north') {
     title = 'Find and explore places and points of interest at Parramatta North.'
   } else if (theme === 'rgb') {
     title = 'Find and explore places and points of interest at Registrar General\'s Bulding.'

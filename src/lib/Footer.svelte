@@ -1,7 +1,7 @@
 <script lang="ts">
   const theme = import.meta.env.VITE_THEME;
   let title = "";
-  if (theme === "parramattaNorth") {
+  if (theme === "parramatta-north") {
     title = "Parramatta North";
   } else if (theme === "rgb") {
     title = "Registrar General's Building";

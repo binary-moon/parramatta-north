@@ -3,6 +3,8 @@
 
   import { isAcknowledgementVisible, hasAcknowledgementBeenSeen } from '$lib/store.ts';
 
+  const theme = import.meta.env.VITE_THEME;
+
   let components = {};
 
   export let data;
@@ -24,7 +26,7 @@
     let hasBeenSeen;
     hasAcknowledgementBeenSeen.subscribe(value => hasBeenSeen = value);
 
-    if (!hasBeenSeen) {
+    if (theme === 'rgb' && !hasBeenSeen) {
       // Wait for 5 seconds before showing the acknowledgement
       setTimeout(() => {
         isAcknowledgementVisible.set(true);

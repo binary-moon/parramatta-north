@@ -79,7 +79,7 @@
   }
 
   let data = {}
-  if (theme === 'parramattaNorth') {
+  if (theme === 'parramatta-north') {
     data = parramattaNorthData;
   } else if (theme === 'rgb') {
     data = rgbData;
@@ -92,6 +92,8 @@
       isAcknowledgementVisible.set(true);
     }
   }
+
+  console.log({data})
   
 </script>
 
@@ -100,7 +102,7 @@
     class="bg-primary absolute top-0 left-0 w-full h-full py-16 px-6 z-20"
     transition:fly={{ delay: 0, duration: 300, easing: cubicOut }}
   >
-    {#if theme === 'parramattaNorth'}
+    {#if theme === 'parramatta-north'}
     <img src="/Logo_Parramatta_North_On_Colour.svg" alt="Paramatta North">
     {/if}
     {#if theme === 'rgb'}

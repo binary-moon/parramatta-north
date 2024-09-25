@@ -7,10 +7,9 @@
   let logoColour = ""
   let logoWhite = ""
   let smallLogoWidth = ""
-  if (theme === "parramattaNorth") {
+  if (theme === "parramatta-north") {
     logoColour = "/Logo_Parramatta_North_On_Colour.svg";
     logoWhite = "/Logo_Parramatta_North_On_White.svg"
-    smallLogoWidth = "w-[20dvw]"
   } else if (theme === "rgb") {
     logoColour = "/Logo_RGB_Small_White.svg";
     logoWhite = "/Logo_RGB_Large.svg"
@@ -41,7 +40,7 @@
     </a>
     <NavigationButton isNavActive={$isNavActive} toggleNavigation={toggleNavigation}/>
   </div>
-  {#if isHomePage && theme === 'parramattaNorth'}
+  {#if isHomePage && theme === 'parramatta-north'}
     <p>Explore and discover a new and emerging destination - a place of compelling stories, connecting Country and community.</p>
   {/if}
 </header>
