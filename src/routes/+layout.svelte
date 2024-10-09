@@ -37,7 +37,7 @@
     {/if}
     <Footer />
   {/if}
-  {#if $page.data.theme === 'rgb' && $isAcknowledgementVisible}
+  {#if $isAcknowledgementVisible}
     <Acknowledgement />
   {/if}
 </div>

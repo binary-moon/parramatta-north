@@ -26,7 +26,7 @@
     let hasBeenSeen;
     hasAcknowledgementBeenSeen.subscribe(value => hasBeenSeen = value);
 
-    if (theme === 'rgb' && !hasBeenSeen) {
+    if (!hasBeenSeen) {
       // Wait for 5 seconds before showing the acknowledgement
       setTimeout(() => {
         isAcknowledgementVisible.set(true);
