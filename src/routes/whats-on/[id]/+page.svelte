@@ -153,6 +153,7 @@
       </div>
       <div class="flex flex-col">
         {#if arePlacesFetched}
+          <span class="text-[20px]/[28px] font-bold">Things to see and do...</span>
           {#each places as place}
             <PlacesCard 
               title={place.title} 
