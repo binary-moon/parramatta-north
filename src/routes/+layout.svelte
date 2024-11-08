@@ -12,6 +12,7 @@
 
   onMount(() => {
     // Inject the GA scripts into the head
+    console.log('Injecting GA scripts');
     const gtagScript = document.createElement('script');
     gtagScript.setAttribute('src', `https://www.googletagmanager.com/gtag/js?id=${gaID}`);
     gtagScript.setAttribute('async', '');
