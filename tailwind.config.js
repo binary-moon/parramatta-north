@@ -46,7 +46,7 @@ export default {
               color: "#22272B",
             },
             a: {
-              color: "#2E808E",
+              color: "#146CFD",
               fontWeight: "bold",
             },
             img: {
@@ -81,7 +81,7 @@ export default {
       },
       {
         rgb: {
-          primary: "#2E808E",
+          primary: "#146CFD",
           accent: "#002664",
           neutral: "#22272B",
           "neutral-content": "#F2F2F2",
