@@ -209,7 +209,7 @@
     loadScript(`https://maps.googleapis.com/maps/api/js?key=${apiKey}`, async () => {
       map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
         center: defaultLocation,
-        zoom: 17,
+        zoom: 19,
         mapTypeControl: false,
         fullscreenControl: false,
         styles: [
