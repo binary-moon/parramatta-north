@@ -9,6 +9,9 @@
 
   import type { ILatLong, ITourStep } from '$lib/types';
 
+  const theme = import.meta.env.VITE_THEME;
+  const brandColor = theme === 'rgb' ? '#146CFD' : '#F3631B';
+
   let map: google.maps.Map;
   let directionsService: google.maps.DirectionsService;
   let directionsRenderer: google.maps.DirectionsRenderer;
@@ -47,7 +50,7 @@
   const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
     deviceOrientation = event;
 
-    if (deviceOrientation) {
+    if (deviceOrientation && userMarker) {
       const { alpha } = deviceOrientation;
       userMarker.updateRotation(alpha);
     }
@@ -109,7 +112,7 @@
 
   const setMarkerColor = (marker: google.maps.Marker, index: number) => {
     const isActive = activeStep === index + 1;
-    const color = isActive ? '#F3631B' : "#22272B"; // Active color or default color
+    const color = isActive ? brandColor : "#22272B"; // Active color or default color
     marker.setIcon({
       path: google.maps.SymbolPath.CIRCLE,
       scale: 15,
@@ -239,7 +242,7 @@
 
       userPathDirectionsRenderer = new google.maps.DirectionsRenderer({
         polylineOptions: {
-        strokeColor: "#F3631B",
+        strokeColor: brandColor,
         strokeOpacity: 0,
         strokeWeight: 6,
         zIndex: 2,
@@ -248,9 +251,9 @@
             icon: {
               path: google.maps.SymbolPath.CIRCLE,
               fillOpacity: 1,
-              fillColor: "#F3631B",
+              fillColor: brandColor,
               strokeOpacity: 1,
-              strokeColor: "#F3631B",
+              strokeColor: brandColor,
               strokeWeight: 1,
               scale: 3,
             },
@@ -269,7 +272,7 @@
 
       if (window.DeviceOrientationEvent) {
         // window.addEventListener('deviceorientation', handleDeviceOrientation);
-        requestDeviceOrientationPermission();
+        window.addEventListener('deviceorientation', handleDeviceOrientation);
       }
 
       if (navigator.geolocation) {

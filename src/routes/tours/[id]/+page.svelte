@@ -34,8 +34,24 @@
     }
   }
 
-  const startTour = () => {
+  const startTour = async () => {
     if (!arePlacesFetched) return;
+
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      try {
+        const permissionState = await DeviceOrientationEvent.requestPermission();
+        if (permissionState === 'granted') {
+          isTourStarted.set(true)
+        } else {
+        }
+      } catch (error) {
+        console.error('Error requesting Device Orientation permission:', error);
+      }
+    } else {
+      // Handle browsers that don't support permission request
+      isTourStarted.set(true)
+    }
+
     isTourStarted.set(true)
   }
 

@@ -37,14 +37,6 @@
     ],
     secondary: [
       {
-        title: 'Subscribe',
-        url: '/subscribe',
-      },
-      {
-        title: 'FAQs',
-        url: '/faqs', 
-      },
-      {
         title: 'Privacy policy',
         url: '/privacy-policy',
       }
