@@ -112,7 +112,7 @@
     <span class="text-primary text-sm/[26px] font-bold">{@html title}</span>
   </div>
   <h4 class="text-[22px]/[28px] font-bold mt-3">{placeTitle}</h4>
-  {#if isArrived}
+  <!-- {#if isArrived} -->
     <div class="flex flex-col gap-3 bg-neutral-content p-6 rounded-[12px] mt-6">
       <div class="flex gap-3">
         <img src="/Arrival_Icon.svg" alt="Arrival Icon" />
@@ -123,7 +123,7 @@
         <Button buttonStyle="primary" additionalClasses="mt-2" handleClick={handleArClick}>View AR experience now</Button>
       {/if}
     </div>
-  {/if}
+  <!-- {/if} -->
   <Image imageId={image} placeholder={imagePlaceholder} alt={title} classes="w-full mt-6 rounded-[12px]" />
   {#if !isArrived}
     <div class="flex flex-col gap-3 bg-neutral-content p-6 rounded-[12px] mt-6">

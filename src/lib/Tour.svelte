@@ -23,6 +23,7 @@
   let userMarker: any | null = null;
   let hasActiveStepReached: boolean = false;
   let deviceOrientation: DeviceOrientationEvent | null = null;
+  let sortedTourSteps: ITourStep[] = [];
 
   export let tourSteps: ITourStep[] = [];
   export let title: string = '';
@@ -55,6 +56,12 @@
       userMarker.updateRotation(alpha);
     }
   };
+
+  const handleNextStepButton = () => {
+    activeStep++;
+    markers = markers.slice(); // Force reactivity
+    hasActiveStepReached = false;
+  }
 
   
 
@@ -123,7 +130,7 @@
   }
 
   const loadMarkersAndDrawRoute = (map: google.maps.Map) => {
-    tourSteps.forEach((step, index) => {
+    sortedTourSteps.forEach((step, index) => {
       let marker = new google.maps.Marker({
         position: step.location,
         map,
@@ -170,25 +177,9 @@
     isTourStarted.set(false);
   }
 
-  const requestDeviceOrientationPermission = async () => {
-    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      try {
-        const permissionState = await DeviceOrientationEvent.requestPermission();
-        if (permissionState === 'granted') {
-          window.addEventListener('deviceorientation', handleDeviceOrientation);
-        } else {
-        }
-      } catch (error) {
-        console.error('Error requesting Device Orientation permission:', error);
-      }
-    } else {
-      // Handle browsers that don't support permission request
-      window.addEventListener('deviceorientation', handleDeviceOrientation);
-    }
-  };
-
   const sortTourStepsByUserLocation = (userLocation: google.maps.LatLng) => {
-    tourSteps.sort((a, b) => {
+    console.log({tourSteps})
+    return tourSteps.sort((a, b) => {
       const distanceA = google.maps.geometry.spherical.computeDistanceBetween(
         userLocation,
         new google.maps.LatLng(a.location.lat, a.location.lng)
@@ -271,20 +262,23 @@
       UserMarker = module.UserMarker;
 
       if (window.DeviceOrientationEvent) {
-        // window.addEventListener('deviceorientation', handleDeviceOrientation);
         window.addEventListener('deviceorientation', handleDeviceOrientation);
       }
 
-      if (navigator.geolocation) {
+      setTimeout(() => {
+        if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          sortTourStepsByUserLocation(userLocation); // Sort tour steps based on user location
+          sortedTourSteps = sortTourStepsByUserLocation(userLocation); // Sort tour steps based on user location
           loadMarkersAndDrawRoute(map);
           drawUserMarkerAndUpdateLocation();
         }, null, { enableHighAccuracy: true });
       } else {
         loadMarkersAndDrawRoute(map);
       }
+      }, 1000)
+
+      
     });
 
     window.addEventListener('message', (event) => removeARFrame(event));
@@ -298,7 +292,12 @@
 {#if !$areTourDetailsExpanded}
   <button class="absolute top-10 right-6" on:click={finishTour}><img src="/Close_Button.png" alt="Close button" /></button>
 {/if}
-<TourSteps {tourSteps} {title} {activeStep} {hasActiveStepReached}/>
+{#if sortedTourSteps.length > 0}
+  {#if hasActiveStepReached && activeStep < sortedTourSteps.length}
+    <button on:click={handleNextStepButton} class="absolute top-[68%] left-1/2 -translate-x-[50%] bg-white font-bold rounded-full p-[10px] gap-2 flex shadow-md"><img src="/Travel_Icon.svg" alt="travel icon"/>Go to point {activeStep + 1}</button>
+  {/if}
+  <TourSteps tourSteps={sortedTourSteps} {title} {activeStep} {hasActiveStepReached}/>
+{/if}
 {#if $isARActive}
   <ARFrame url={$activeARURL}/>
 {/if}
