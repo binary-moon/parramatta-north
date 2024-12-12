@@ -27,6 +27,7 @@
 
   const imagePlaceholder = "https://placehold.co/760x640/black/333";
   const { title: placeTitle, whenArrived, beforeArrival, content, image, audioLink, arLink } = details;
+  console.log({arLink})
 
   const handleAudioClick = (event: MouseEvent) => {
     event.stopPropagation();

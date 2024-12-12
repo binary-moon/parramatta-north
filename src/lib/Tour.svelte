@@ -63,8 +63,6 @@
     hasActiveStepReached = false;
   }
 
-  
-
   const drawUserMarkerAndUpdateLocation = () => {
     watchId = navigator.geolocation.watchPosition((position) => {
       const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);

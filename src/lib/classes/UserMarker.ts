@@ -1,18 +1,19 @@
 export class UserMarker extends google.maps.OverlayView {
   constructor(position, map) {
-    super()
-    this.position = position
-    this.map = map
-    this.div = null
-    this.setMap(map)
+    super();
+    this.position = position;
+    this.map = map;
+    this.div = null;
+    this.setMap(map);
   }
 
   onAdd() {
-    this.div = document.createElement('div');
-    this.div.className = 'userMarker';
-    this.div.innerHTML = '<span class="userMarkerInner"></span><span class="userMarkerDirection"></span>';
+    this.div = document.createElement("div");
+    this.div.className = "userMarker";
+    this.div.innerHTML =
+      '<span class="userMarkerInner"></span><span class="userMarkerDirection"></span>';
 
-    this.div.style.zIndex = '1000';
+    this.div.style.zIndex = "1000";
 
     // Add the element to the "overlayLayer" pane.
     const panes = this.getPanes();
@@ -24,8 +25,8 @@ export class UserMarker extends google.maps.OverlayView {
     const overlayProjection = this.getProjection();
     const position = overlayProjection.fromLatLngToDivPixel(this.position);
 
-    this.div.style.left = position.x + 'px';
-    this.div.style.top = position.y + 'px';
+    this.div.style.left = position.x + "px";
+    this.div.style.top = position.y + "px";
   }
 
   onRemove() {
@@ -41,18 +42,18 @@ export class UserMarker extends google.maps.OverlayView {
     if (this.div && this.map) {
       const overlayProjection = this.getProjection();
       const position = overlayProjection.fromLatLngToDivPixel(this.position);
-      this.div.style.left = position.x + 'px';
-      this.div.style.top = position.y + 'px';
+      this.div.style.left = position.x + "px";
+      this.div.style.top = position.y + "px";
     }
   }
 
   updateRotation(alpha: number) {
     if (this.div) {
-      this.div.style.transform = `rotate(-${alpha}deg)`;
+      this.div.style.transform = `rotate(${alpha}deg)`;
     }
   }
 
   getPosition() {
-    return this.position
+    return this.position;
   }
 }
