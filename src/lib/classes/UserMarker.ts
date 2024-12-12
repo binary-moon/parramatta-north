@@ -49,7 +49,7 @@ export class UserMarker extends google.maps.OverlayView {
 
   updateRotation(alpha: number) {
     if (this.div) {
-      this.div.style.transform = `rotate(${alpha - 90}deg)`;
+      this.div.style.transform = `rotate(${alpha + 180}deg)`;
     }
   }
 
