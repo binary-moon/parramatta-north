@@ -51,6 +51,8 @@
   const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
     deviceOrientation = event;
 
+    alert(deviceOrientation.webkitCompassHeading);
+
     if (deviceOrientation && userMarker) {
       const { alpha } = deviceOrientation;
       userMarker.updateRotation(alpha);
