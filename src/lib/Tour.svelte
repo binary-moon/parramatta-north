@@ -49,15 +49,25 @@
   };
 
   const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
-    deviceOrientation = event;
+  deviceOrientation = event;
 
-    alert(deviceOrientation.webkitCompassHeading);
+  let heading: number | null = null;
+  
+  // Check if webkitCompassHeading is available and a number
+  if (typeof deviceOrientation.webkitCompassHeading === 'number') {
+    heading = deviceOrientation.webkitCompassHeading;
+  } else if (typeof deviceOrientation.alpha === 'number') {
+    heading = deviceOrientation.alpha;
+  }
 
-    if (deviceOrientation && userMarker) {
-      const { alpha } = deviceOrientation;
-      userMarker.updateRotation(alpha);
-    }
-  };
+  // Optional: If you still want to see the alert for debugging
+  console.log(heading !== null ? heading : 'No heading available');
+
+  // Update rotation only if heading is available and userMarker exists
+  if (heading !== null && userMarker) {
+    userMarker.updateRotation(heading);
+  }
+};
 
   const handleNextStepButton = () => {
     activeStep++;
