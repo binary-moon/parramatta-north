@@ -67,6 +67,10 @@
         title: 'Acknowledgement of Country',
         url: '/acknowledgement',
       },
+      {
+        title: 'Privacy policy',
+        url: '/privacy-policy',
+      }
     ]
   }
 
