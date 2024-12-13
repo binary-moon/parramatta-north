@@ -265,6 +265,8 @@
       const module = await import('$lib/classes/UserMarker');
       UserMarker = module.UserMarker;
 
+      console.log({UserMarker})
+
       setTimeout(() => {
         console.log('timeout')
         console.log(navigator.geolocation)
