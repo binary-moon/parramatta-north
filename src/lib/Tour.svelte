@@ -5,7 +5,7 @@
   import ARFrame from '$lib/ARFrame.svelte';
 
   import { areTourDetailsExpanded, isTourStarted, isARActive, activeARURL } from '$lib/store';
-  import { loadScript } from '$lib/utilities/loadScript';
+  import { loadScript, removeScript } from '$lib/utilities/loadScript';
 
   import type { ILatLong, ITourStep } from '$lib/types';
 
@@ -17,12 +17,12 @@
   let directionsRenderer: google.maps.DirectionsRenderer;
   let userPathDirectionsRenderer: google.maps.DirectionsRenderer;
   let apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+  const googleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
   let activeStep: number = 1;
   let watchId: number | null;
   let UserMarker: any;
   let userMarker: any | null = null;
   let hasActiveStepReached: boolean = false;
-  let deviceOrientation: DeviceOrientationEvent | null = null;
   let sortedTourSteps: ITourStep[] = [];
 
   export let tourSteps: ITourStep[] = [];
@@ -30,6 +30,9 @@
   export let defaultLocation: ILatLong = { lat: -33.74069085195705, lng: 151.0442223807315 };
 
   let markers: google.maps.Marker[] = [];
+
+  // Store the event handler in a variable so we can remove it properly
+  const messageHandler = (event: MessageEvent) => removeARFrame(event);
 
   $: {
     markers.forEach((marker, index) => {
@@ -48,27 +51,6 @@
     hasActiveStepReached = false;
   };
 
-  const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
-  deviceOrientation = event;
-
-  let heading: number | null = null;
-  
-  // Check if webkitCompassHeading is available and a number
-  if (typeof deviceOrientation.webkitCompassHeading === 'number') {
-    heading = deviceOrientation.webkitCompassHeading;
-  } else if (typeof deviceOrientation.alpha === 'number') {
-    heading = deviceOrientation.alpha;
-  }
-
-  // Optional: If you still want to see the alert for debugging
-  console.log(heading !== null ? heading : 'No heading available');
-
-  // Update rotation only if heading is available and userMarker exists
-  if (heading !== null && userMarker) {
-    userMarker.updateRotation(heading);
-  }
-};
-
   const handleNextStepButton = () => {
     activeStep++;
     markers = markers.slice(); // Force reactivity
@@ -76,6 +58,7 @@
   }
 
   const drawUserMarkerAndUpdateLocation = () => {
+    console.log('drawUserMarkerAndUpdateLocation')
     watchId = navigator.geolocation.watchPosition((position) => {
       const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
@@ -85,9 +68,13 @@
         userMarker.updatePosition(userLocation);
       }
 
-      drawPathToActiveMarker(userLocation)
+      drawPathToActiveMarker(userLocation);
       checkDistanceToActiveMarker(userLocation);
-    }, null, { enableHighAccuracy: true });
+    },
+    (error) => {
+      console.error('watchPosition error:', error);
+    },
+    { enableHighAccuracy: true });
   }
 
   const drawPathToActiveMarker = (userLocation: google.maps.LatLng) => {
@@ -147,14 +134,13 @@
         title: `Step ${index + 1}`,
         label: {
           text: `${index + 1}`, // Label text
-          color: "#FFFFFF", // Label text color, set this to your desired color
-          fontSize: "14px", // Optional: You can set the font size
-          fontWeight: "bold", // Optional: You can set the font weight
+          color: "#FFFFFF", 
+          fontSize: "14px",
+          fontWeight: "bold",
         },
       });
 
       setMarkerColor(marker, index); 
-
       marker.addListener('click', () => onMarkerClick(marker, index))
       markers.push(marker); // Store marker for later use
     });
@@ -165,19 +151,25 @@
   }
 
   const clearComponent = () => {
+    console.log('unmounting')
+    removeScript(googleMapsUrl);
+
     if (watchId) {
       navigator.geolocation.clearWatch(watchId);
       watchId = null;
     }
+
     if (userMarker) {
       userMarker.onRemove();
       userMarker = null;
     }
-    if (window.DeviceOrientationEvent) {
-      window.removeEventListener('deviceorientation', handleDeviceOrientation);
-    }
 
-    window.removeEventListener('message', (event) => removeARFrame(event));
+    // Remove event listeners with the stored handler reference
+    window.removeEventListener('message', messageHandler);
+
+    // Reset arrays and variables
+    markers = [];
+    sortedTourSteps = [];
 
     areTourDetailsExpanded.set(false);
     isTourStarted.set(false);
@@ -202,7 +194,7 @@
     });
   };
 
-  const removeARFrame = (event) => {
+  const removeARFrame = (event: MessageEvent) => {
     const eventData = event.data;
     if (eventData.action === 'exitAR') {
       isARActive.set(false);
@@ -210,7 +202,9 @@
   }
 
   onMount(() => {
-    loadScript(`https://maps.googleapis.com/maps/api/js?key=${apiKey}`, async () => {
+    console.log('on mount!!')
+    loadScript(googleMapsUrl, async () => {
+      console.log('script loaded')
       map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
         center: defaultLocation,
         zoom: 18,
@@ -231,73 +225,85 @@
       directionsService = new google.maps.DirectionsService();
       directionsRenderer = new google.maps.DirectionsRenderer({
         polylineOptions: {
-          strokeColor: "#22272B", // Example: Red color for the route line
+          strokeColor: "#22272B",
           strokeOpacity: 1,
           strokeWeight: 4,
           zIndex: 1,
         },
-        suppressMarkers: true, // This will remove the default A, B, C markers
+        suppressMarkers: true,
         preserveViewport: true,
       });
       directionsRenderer.setMap(map);
 
       userPathDirectionsRenderer = new google.maps.DirectionsRenderer({
         polylineOptions: {
-        strokeColor: brandColor,
-        strokeOpacity: 0,
-        strokeWeight: 6,
-        zIndex: 2,
-        icons: [
-          {
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              fillOpacity: 1,
-              fillColor: brandColor,
-              strokeOpacity: 1,
-              strokeColor: brandColor,
-              strokeWeight: 1,
-              scale: 3,
+          strokeColor: brandColor,
+          strokeOpacity: 0,
+          strokeWeight: 6,
+          zIndex: 2,
+          icons: [
+            {
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillOpacity: 1,
+                fillColor: brandColor,
+                strokeOpacity: 1,
+                strokeColor: brandColor,
+                strokeWeight: 1,
+                scale: 3,
+              },
+              offset: "0",
+              repeat: "16px",
             },
-            offset: "0",
-            repeat: "16px",
-          },
-        ],
-      },
-      suppressMarkers: true,
-      preserveViewport: true,
+          ],
+        },
+        suppressMarkers: true,
+        preserveViewport: true,
       });
       userPathDirectionsRenderer.setMap(map);
 
       const module = await import('$lib/classes/UserMarker');
       UserMarker = module.UserMarker;
 
-      if (window.DeviceOrientationEvent) {
-        window.addEventListener('deviceorientation', handleDeviceOrientation);
-      }
-
       setTimeout(() => {
+        console.log('timeout')
+        console.log(navigator.geolocation)
         if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          sortedTourSteps = sortTourStepsByUserLocation(userLocation); // Sort tour steps based on user location
+          console.log('geolocation available')
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              console.log('position acquired', position)
+              const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+              console.log('userLocation:', userLocation)
+              sortedTourSteps = sortTourStepsByUserLocation(userLocation); 
+              loadMarkersAndDrawRoute(map);
+              drawUserMarkerAndUpdateLocation();
+            },
+            (error) => {
+              console.error('getCurrentPosition error:', error);
+              // Fallback: Just load markers if we can't get user position
+              sortedTourSteps = tourSteps;
+              loadMarkersAndDrawRoute(map);
+            },
+            { enableHighAccuracy: false, timeout: 3000, maximumAge: 0 }
+          );
+        } else {
+          console.log('no geolocation')
+          // Fallback if no geolocation
+          sortedTourSteps = tourSteps;
           loadMarkersAndDrawRoute(map);
-          drawUserMarkerAndUpdateLocation();
-        }, null, { enableHighAccuracy: true });
-      } else {
-        loadMarkersAndDrawRoute(map);
-      }
+        }
       }, 1000)
-
-      
     });
 
-    window.addEventListener('message', (event) => removeARFrame(event));
+    window.addEventListener('message', messageHandler);
 
     return () => {
       clearComponent();
     }
   })
 </script>
+
 <div id="map" class="h-full w-full"></div>
 {#if !$areTourDetailsExpanded}
   <button class="absolute top-10 right-6" on:click={finishTour}><img src="/Close_Button.png" alt="Close button" /></button>

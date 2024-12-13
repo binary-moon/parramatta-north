@@ -13,22 +13,12 @@
   let userMarker: any | null = null;
   let PlaceMarker: any;
   let placeMarker: any | null = null;
-  let deviceOrientation: DeviceOrientationEvent | null = null;
   let watchId: number | null;
   let distance: number | null = null;
 
   export let location: ILatLong = defaultLocation;
   export let title: string = '';
   export let image: string =  '';
-
-  const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
-    deviceOrientation = event;
-
-    if (userMarker && deviceOrientation) {
-      const { alpha } = deviceOrientation;
-      userMarker.updateRotation(alpha);
-    }
-  };
 
   const drawUserMarkerAndUpdateLocation = () => {
     watchId = navigator.geolocation.watchPosition((position) => {
@@ -97,30 +87,6 @@
 
     const placeMarkerModule = await import('$lib/classes/PlaceMarker');
     PlaceMarker = placeMarkerModule.PlaceMarker;
-
-    const requestDeviceOrientationPermission = async () => {
-    console.log(DeviceOrientationEvent.requestPermission)
-    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      try {
-        const permissionState = await DeviceOrientationEvent.requestPermission();
-        if (permissionState === 'granted') {
-          window.addEventListener('deviceorientation', handleDeviceOrientation);
-        } else {
-          console.log('Device Orientation permission denied');
-        }
-      } catch (error) {
-        console.error('Error requesting Device Orientation permission:', error);
-      }
-    } else {
-      // Handle browsers that don't support permission request
-      window.addEventListener('deviceorientation', handleDeviceOrientation);
-    }
-  };
-
-    if (window.DeviceOrientationEvent) {
-      // window.addEventListener('deviceorientation', handleDeviceOrientation);
-      requestDeviceOrientationPermission();
-    }
 
     directionsService = new google.maps.DirectionsService();
 

@@ -58,7 +58,12 @@
         <div class="position: absolute bottom-0 left-0 w-full h-[150px]" style="background: linear-gradient(0deg, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);"></div>
         <Button buttonStyle="primary" additionalClasses="z-10" handleClick={handleContinue}>Continue</Button>
       </div>
+      {#if theme === 'rgb'}
       <img src="/RGB_Tour_Line.svg" alt="decoration 1" class="absolute top-0 right-0">
+      {/if}
+      {#if theme === 'parramatta-north'}
+      <img src="/Parramatta_North_Tour_Line.svg" alt="decoration 2" class="absolute top-0 right-0">
+      {/if}
     </div>
   </BackgroundImage>
 </div>

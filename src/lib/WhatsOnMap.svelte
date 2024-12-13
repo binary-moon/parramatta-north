@@ -16,36 +16,9 @@
   let PlaceMarker: any;
   let placeMarkers: any[] = [];
   let userLocation: google.maps.LatLng | null = null;
-  let deviceOrientation: DeviceOrientationEvent | null = null;
   let activePlace: number = 0;
   let watchId: number | null;
   const mapImagePlaceholder = 'https://placehold.co/255x255/black/333';
-
-  const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
-    deviceOrientation = event;
-
-    if (deviceOrientation && userMarker) {
-      const { alpha } = deviceOrientation;
-      userMarker.updateRotation(alpha);
-    }
-  };
-
-  const requestDeviceOrientationPermission = async () => {
-    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      try {
-        const permissionState = await DeviceOrientationEvent.requestPermission();
-        if (permissionState === 'granted') {
-          window.addEventListener('deviceorientation', handleDeviceOrientation);
-        } else {
-        }
-      } catch (error) {
-        console.error('Error requesting Device Orientation permission:', error);
-      }
-    } else {
-      // Handle browsers that don't support permission request
-      window.addEventListener('deviceorientation', handleDeviceOrientation);
-    }
-  };
 
   const sortTourStepsByUserLocation = (userLocation: google.maps.LatLng) => {
     places.sort((a, b) => {
@@ -141,9 +114,6 @@
       placeMarkers.forEach(marker => marker.onRemove());
       placeMarkers = [];
     }
-    if (window.DeviceOrientationEvent) {
-      window.removeEventListener('deviceorientation', handleDeviceOrientation);
-    }
   };
 
   onMount(() => {
@@ -198,10 +168,6 @@
 
       const placeMarkerModule = await import('$lib/classes/PlaceMarker');
       PlaceMarker = placeMarkerModule.PlaceMarker;
-
-      if (window.DeviceOrientationEvent) {
-        requestDeviceOrientationPermission();
-      }
 
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {

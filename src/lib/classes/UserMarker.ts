@@ -10,8 +10,7 @@ export class UserMarker extends google.maps.OverlayView {
   onAdd() {
     this.div = document.createElement("div");
     this.div.className = "userMarker";
-    this.div.innerHTML =
-      '<span class="userMarkerInner"></span><span class="userMarkerDirection"></span>';
+    this.div.innerHTML = '<span class="userMarkerInner"></span>';
 
     this.div.style.zIndex = "1000";
 
@@ -44,12 +43,6 @@ export class UserMarker extends google.maps.OverlayView {
       const position = overlayProjection.fromLatLngToDivPixel(this.position);
       this.div.style.left = position.x + "px";
       this.div.style.top = position.y + "px";
-    }
-  }
-
-  updateRotation(alpha: number) {
-    if (this.div) {
-      this.div.style.transform = `rotate(${alpha}deg)`;
     }
   }
 
