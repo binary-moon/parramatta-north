@@ -106,7 +106,7 @@
       const activeMarkerLocation = activeMarker.getPosition();
       if (!hasActiveStepReached && activeMarkerLocation) {
         const distance = google.maps.geometry.spherical.computeDistanceBetween(userLocation, activeMarkerLocation);
-        if (distance <= 25) {
+        if (distance <= 10) {
           areTourDetailsExpanded.set(true);
           hasActiveStepReached = true;
         }
