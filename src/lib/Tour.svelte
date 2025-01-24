@@ -23,6 +23,7 @@
   let UserMarker: any;
   let userMarker: any | null = null;
   let hasActiveStepReached: boolean = false;
+  let deviceOrientation: DeviceOrientationEvent | null = null;
   let sortedTourSteps: ITourStep[] = [];
 
   export let tourSteps: ITourStep[] = [];
@@ -38,11 +39,25 @@
     markers.forEach((marker, index) => {
       setMarkerColor(marker, index); // Update marker color based on the current activeStep
     });
-    if (userMarker && typeof userMarker.getPosition === 'function') {
-      const userLocation = userMarker.getPosition();
-      drawPathToActiveMarker(userLocation);
-    }
   }
+
+  const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
+    deviceOrientation = event;
+    let heading: number | null = null;
+    
+    // Check if webkitCompassHeading is available and a number
+    if (typeof deviceOrientation.webkitCompassHeading === 'number') {
+      heading = deviceOrientation.webkitCompassHeading;
+    } else if (typeof deviceOrientation.alpha === 'number') {
+      heading = deviceOrientation.alpha;
+    }
+    // Optional: If you still want to see the alert for debugging
+    console.log(heading !== null ? heading : 'No heading available');
+    // Update rotation only if heading is available and userMarker exists
+    if (heading !== null && userMarker) {
+      userMarker.updateRotation(heading);
+    }
+  };
 
   const onMarkerClick = (marker: google.maps.Marker, index: number) => {
     // Update active step or any other callback action
@@ -68,36 +83,12 @@
         userMarker.updatePosition(userLocation);
       }
 
-      drawPathToActiveMarker(userLocation);
       checkDistanceToActiveMarker(userLocation);
     },
     (error) => {
       console.error('watchPosition error:', error);
     },
     { enableHighAccuracy: true });
-  }
-
-  const drawPathToActiveMarker = (userLocation: google.maps.LatLng) => {
-    const activeMarker = markers[activeStep - 1];
-    if (activeMarker) {
-      const activeMarkerLocation = activeMarker.getPosition();
-      if (activeMarkerLocation) {
-        directionsService.route(
-          {
-            origin: userLocation,
-            destination: activeMarkerLocation,
-            travelMode: google.maps.TravelMode.WALKING,
-          },
-          (result, status) => {
-            if (status === google.maps.DirectionsStatus.OK) {
-              userPathDirectionsRenderer.setDirections(result);
-            } else {
-              console.error(`Directions request failed due to ${status}`);
-            }
-          }
-        )
-      }
-    }
   }
 
   const checkDistanceToActiveMarker = (userLocation: google.maps.LatLng) => {
@@ -164,6 +155,10 @@
       userMarker = null;
     }
 
+    if (window.DeviceOrientationEvent) {
+      window.removeEventListener('deviceorientation', handleDeviceOrientation);
+    }
+
     // Remove event listeners with the stored handler reference
     window.removeEventListener('message', messageHandler);
 
@@ -210,6 +205,7 @@
         zoom: 18,
         mapTypeControl: false,
         fullscreenControl: false,
+        streetViewControl: false,
         styles: [
           {
             featureType: 'poi',
@@ -266,6 +262,10 @@
       UserMarker = module.UserMarker;
 
       console.log({UserMarker})
+
+      if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', handleDeviceOrientation);
+      }
 
       setTimeout(() => {
         console.log('timeout')

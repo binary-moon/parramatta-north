@@ -70,6 +70,7 @@
       zoom: 17,
       mapTypeControl: false,
       fullscreenControl: false,
+      streetViewControl: false,
       styles: [
         {
           featureType: 'poi',
