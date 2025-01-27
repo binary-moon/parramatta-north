@@ -77,6 +77,8 @@
     watchId = navigator.geolocation.watchPosition((position) => {
       const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
+      console.log({watchId})
+
       if (!userMarker) {
         userMarker = new UserMarker(userLocation, map);
       } else {
@@ -143,7 +145,6 @@
 
   const clearComponent = () => {
     console.log('unmounting')
-    removeScript(googleMapsUrl);
 
     if (watchId) {
       navigator.geolocation.clearWatch(watchId);

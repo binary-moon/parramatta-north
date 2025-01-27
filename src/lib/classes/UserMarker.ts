@@ -14,10 +14,12 @@ export class UserMarker extends google.maps.OverlayView {
       '<span class="userMarkerInner"></span><span class="userMarkerDirection"></span>';
 
     this.div.style.zIndex = "1000";
+    console.log("ADD USER MARKER");
 
     // Add the element to the "overlayLayer" pane.
     const panes = this.getPanes();
     panes.floatPane.appendChild(this.div);
+    console.log("aPPENDS USER MARKER");
   }
 
   draw() {
