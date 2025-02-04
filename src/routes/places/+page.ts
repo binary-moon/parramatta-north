@@ -1,11 +1,11 @@
-import type { PageLoad } from './$types';
+import type { PageLoad } from "./$types";
 
-export const load = (async ({fetch}) => {
+export const load = (async ({ fetch }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
-  const response = await fetch(`${apiUrl}/place/`);
-  const data = await response.json()
+  const response = await fetch(`${apiUrl}/place?per_page=100`);
+  const data = await response.json();
 
-  const places = data.map(place => {
+  const places = data.map((place) => {
     return {
       id: place.id,
       raw: place,
@@ -13,25 +13,28 @@ export const load = (async ({fetch}) => {
       description: place.acf.excerpt,
       image: place.acf.image,
       href: `/places/${place.id}`,
-      tags: place.tags.map(tag => tag.name),
+      tags: place.tags.map((tag) => tag.name),
       location: {
         latitude: place.acf.latitude,
         longitude: place.acf.longitude,
-      }
-    }
-  })
+      },
+    };
+  });
 
-  const filterOptions = data.reduce((acc, place) => {
-    place.tags.forEach(tag => {
-      if (!acc.includes(tag.name)) {
-        acc.push(tag.name);
-      }
-    });
-    return acc;
-  }, ['All']);
+  const filterOptions = data.reduce(
+    (acc, place) => {
+      place.tags.forEach((tag) => {
+        if (!acc.includes(tag.name)) {
+          acc.push(tag.name);
+        }
+      });
+      return acc;
+    },
+    ["All"]
+  );
 
   return {
     places,
     filterOptions,
-  }
+  };
 }) satisfies PageLoad;
