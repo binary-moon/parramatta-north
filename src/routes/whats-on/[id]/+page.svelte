@@ -142,18 +142,24 @@
         <Prose>{@html parsedHTML}</Prose>
       </div>
       <div class="flex justify-center py-8">
-        <Button handleClick={toggleMapView}>
           {#if arePlacesFetched}
-            See map view
+            {#if places.length > 0}
+              <Button handleClick={toggleMapView}>
+                See map view
+              </Button>
+            {/if}
           {:else}
-            <span class="loading loading-spinner"></span>
-            Loading...
+            <Button handleClick={toggleMapView}>
+              <span class="loading loading-spinner"></span>
+              Loading...
+            </Button>
           {/if}
-        </Button>
       </div>
       <div class="flex flex-col">
         {#if arePlacesFetched}
+          {#if places.length > 0}
           <span class="text-[20px]/[28px] font-bold">Things to see and do...</span>
+          {/if}
           {#each places as place}
             <PlacesCard 
               title={place.title} 

@@ -1,6 +1,6 @@
-import type { PageLoad } from './$types';
+import type { PageLoad } from "./$types";
 
-import { formatStringToDateDDMMMYYYY } from '$lib/utilities/calculations';
+import { formatStringToDateDDMMMYYYY } from "$lib/utilities/calculations";
 
 export const load = (async ({ fetch, params }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -14,12 +14,12 @@ export const load = (async ({ fetch, params }) => {
     dateStart: formatStringToDateDDMMMYYYY(data.acf.date_start),
     dateEnd: formatStringToDateDDMMMYYYY(data.acf.date_end),
     htmlContent: data.description,
-    places: data.acf.places_included,
-  }
+    places: data.acf.places_included || [],
+  };
 
   return {
     pageData,
     isFooterHidden: true,
     isWhiteLogo: true,
-  }
+  };
 }) satisfies PageLoad;

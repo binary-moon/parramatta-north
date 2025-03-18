@@ -45,7 +45,7 @@ export const load = (async ({ fetch }) => {
       description: news.acf?.excerpt,
       date: formatDateDDMMMYYYY(news.date),
       image: news.acf?.image,
-      href: `/news/${news.id}`,
+      href: `/latest-news/${news.id}`,
     };
   });
 
@@ -86,6 +86,15 @@ export const load = (async ({ fetch }) => {
         },
       },
       {
+        componentType: "ToursHome",
+        raw: eventsData,
+        props: {
+          title: "Tours",
+          moreLink: "/tours",
+          items: tours,
+        },
+      },
+      {
         componentType: "WhatsOnHome",
         raw: eventsData,
         props: {
@@ -101,15 +110,6 @@ export const load = (async ({ fetch }) => {
           title: "Latest News",
           moreLink: "/latest-news",
           items: news,
-        },
-      },
-      {
-        componentType: "ToursHome",
-        raw: eventsData,
-        props: {
-          title: "Tours",
-          moreLink: "/tours",
-          items: tours,
         },
       },
       {
