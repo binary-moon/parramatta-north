@@ -12,10 +12,12 @@
       <div class="flex flex-col gap-3">
         <span class="text-[22px]/[28px] font-bold">{title}</span>
         <span class="text-base">{description}</span>
+        {#if href}
         <span class="flex gap-[6px]">
           <span class="text-base text-primary underline font-bold underline">{linkText}</span>
           <img src="/Primary_Arrow.svg" alt={linkText} /> 
         </span>
+        {/if}
       </div>
     </div>
   </div>

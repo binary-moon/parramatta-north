@@ -2,57 +2,23 @@
   {
     "id": 1,
     "icon": "/Bus_Icon.svg",
-    "title": "Bus",
-    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
-    "linkText": "See bus schedules",
-    "href": "/"
+    "title": "Buses",
+    "description": "Free shuttle buses are available from Parramatta Station to Parramatta Leagues Club. From here, it is approximately a 10-minute walk to 1 Fleet Street at Parramatta North. Alternatively, bus routes 549, 550, 600, 601, 603, 604, 606, 609, 625, and 706 can be taken from Parramatta Station to bus stops: O'Connell Street opposite Harold Street or O'Connell Street after Albert Street.",
+    "linkText": "Plan your trip",
+    "href": "https://transportnsw.info/"
   },
   {
     "id": 2,
     "icon": "/Light_Rail_Icon.svg",
     "title": "Light Rail",
-    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
-    "linkText": "See light rail schedules",
-    "href": "/"
+    "description": "Take the Parramatta Light Rail to Ngara Station located on Factory Street inside the Parramatta North precinct.",
+    "linkText": "Plan your trip",
+    "href": "https://transportnsw.info/"
   },
   {
     "id": 3,
-    "icon": "/Train_Icon.svg",
-    "title": "Train",
-    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
-    "linkText": "See train schedules",
-    "href": "/"
-  },
-  {
-    "id": 4,
-    "icon": "/Ferry_Icon.svg",
-    "title": "Ferry",
-    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
-    "linkText": "See ferry schedules",
-    "href": "/"
-  },
-  {
-    "id": 5,
-    "icon": "/Walking_Icon.svg",
-    "title": "Walking",
-    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
-    "linkText": "See walking paths",
-    "href": "/"
-  },
-  {
-    "id": 6,
-    "icon": "/Cycling_Icon.svg",
-    "title": "Cycling",
-    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
-    "linkText": "See cycleways",
-    "href": "/"
-  },
-  {
-    "id": 7,
     "icon": "/Driving_Icon.svg",
-    "title": "Driving",
-    "description": "Bus is a public transport service that runs on roads. It is a popular mode of transport in cities and towns.",
-    "linkText": "See parking stations",
-    "href": "/"
+    "title": "Parking",
+    "description": "There is limited parking available on Fleet Street and surrounding streets."
   }
 ]
