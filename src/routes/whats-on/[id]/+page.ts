@@ -7,12 +7,16 @@ export const load = (async ({ fetch, params }) => {
   const response = await fetch(`${apiUrl}/event/${params.id}`);
   const data = await response.json();
 
+  console.log('===============')
+  console.log(data.acf.date_start)
+  console.log('===============')
+
   const pageData = {
     raw: data,
     title: data.title.rendered,
     detailImage: data.acf.image,
-    dateStart: formatStringToDateDDMMMYYYY(data.acf.date_start),
-    dateEnd: formatStringToDateDDMMMYYYY(data.acf.date_end),
+    dateStart: data.acf.date_start ? formatStringToDateDDMMMYYYY(data.acf.date_start) : null,
+    dateEnd: data.acf.date_end ? formatStringToDateDDMMMYYYY(data.acf.date_end) : null,
     htmlContent: data.description,
     places: data.acf.places_included || [],
   };
