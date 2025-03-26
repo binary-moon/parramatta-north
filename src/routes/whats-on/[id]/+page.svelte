@@ -18,7 +18,7 @@
   export let data;
   
   const { pageData } = data
-  const { detailImage, title, dateStart, dateEnd, htmlContent, places: placeIds } = pageData;
+  const { detailImage, title, dateStart, dateEnd, duration, htmlContent, places: placeIds } = pageData;
   const detailImagePlaceholder = "https://placehold.co/1284x1080/black/333"
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -27,6 +27,8 @@
   let watchId: number | null;
   let isMapView: boolean = false;
   let parsedHTML: string;
+
+  console.log({pageData})
 
   const fetchPlaces = async () => {
     try {
@@ -136,6 +138,9 @@
         {#if dateEnd}
           <span class="text-primary text-bold text-sm">-</span>
           <span class="text-primary text-bold text-sm">{dateEnd}</span>
+        {/if}
+        {#if !dateStart && !dateEnd && duration}
+          <span class="text-primary text-bold text-sm">{duration}</span>
         {/if}
       </div>
       <div class="pt-6 mt-6 border-t-neutral-content border-t-[1px]">

@@ -8,7 +8,7 @@ export const load = (async ({ fetch, params }) => {
   const data = await response.json();
 
   console.log('===============')
-  console.log(data.acf.date_start)
+  console.log(data)
   console.log('===============')
 
   const pageData = {
@@ -17,6 +17,7 @@ export const load = (async ({ fetch, params }) => {
     detailImage: data.acf.image,
     dateStart: data.acf.date_start ? formatStringToDateDDMMMYYYY(data.acf.date_start) : null,
     dateEnd: data.acf.date_end ? formatStringToDateDDMMMYYYY(data.acf.date_end) : null,
+    duration: data.acf.duration,
     htmlContent: data.description,
     places: data.acf.places_included || [],
   };
