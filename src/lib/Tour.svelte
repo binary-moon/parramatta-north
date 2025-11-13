@@ -1,16 +1,25 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
-  import TourSteps from '$lib/TourSteps.svelte';
-  import ARFrame from '$lib/ARFrame.svelte';
+  import TourSteps from "$lib/TourSteps.svelte";
+  import ARFrame from "$lib/ARFrame.svelte";
 
-  import { areTourDetailsExpanded, isTourStarted, isARActive, activeARURL } from '$lib/store';
-  import { loadScript, removeScript } from '$lib/utilities/loadScript';
+  import {
+    areTourDetailsExpanded,
+    isTourStarted,
+    isARActive,
+    isShowARGuide,
+    isTourShowGuide,
+    activeARURL,
+  } from "$lib/store";
+  import { loadScript, removeScript } from "$lib/utilities/loadScript";
 
-  import type { ILatLong, ITourStep } from '$lib/types';
+  import type { ILatLong, ITourStep } from "$lib/types";
+  import FirstTimeTourGuide from "./FirstTimeTourGuide.svelte";
+  import ARTourGuide from "./ARTourGuide.svelte";
 
   const theme = import.meta.env.VITE_THEME;
-  const brandColor = theme === 'rgb' ? '#146CFD' : '#F3631B';
+  const brandColor = theme === "rgb" ? "#146CFD" : "#F3631B";
 
   let map: google.maps.Map;
   let directionsService: google.maps.DirectionsService;
@@ -22,13 +31,16 @@
   let watchId: number | null;
   let UserMarker: any;
   let userMarker: any | null = null;
-  let hasActiveStepReached: boolean = false;
+  let hasActiveStepReached: any = false;
   let deviceOrientation: DeviceOrientationEvent | null = null;
   let sortedTourSteps: ITourStep[] = [];
 
   export let tourSteps: ITourStep[] = [];
-  export let title: string = '';
-  export let defaultLocation: ILatLong = { lat: -33.74069085195705, lng: 151.0442223807315 };
+  export let title: string = "";
+  export let defaultLocation: ILatLong = {
+    lat: -33.74069085195705,
+    lng: 151.0442223807315,
+  };
 
   let markers: google.maps.Marker[] = [];
 
@@ -44,15 +56,15 @@
   const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
     deviceOrientation = event;
     let heading: number | null = null;
-    
+
     // Check if webkitCompassHeading is available and a number
-    if (typeof deviceOrientation.webkitCompassHeading === 'number') {
+    if (typeof deviceOrientation.webkitCompassHeading === "number") {
       heading = deviceOrientation.webkitCompassHeading;
-    } else if (typeof deviceOrientation.alpha === 'number') {
+    } else if (typeof deviceOrientation.alpha === "number") {
       heading = deviceOrientation.alpha;
     }
     // Optional: If you still want to see the alert for debugging
-    console.log(heading !== null ? heading : 'No heading available');
+    console.log(heading !== null ? heading : "No heading available");
     // Update rotation only if heading is available and userMarker exists
     if (heading !== null && userMarker) {
       userMarker.updateRotation(heading);
@@ -70,42 +82,54 @@
     activeStep++;
     markers = markers.slice(); // Force reactivity
     hasActiveStepReached = false;
-  }
+  };
 
   const drawUserMarkerAndUpdateLocation = () => {
-    console.log('drawUserMarkerAndUpdateLocation')
-    watchId = navigator.geolocation.watchPosition((position) => {
-      const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    console.log("drawUserMarkerAndUpdateLocation");
+    watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        const userLocation = new google.maps.LatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        );
 
-      console.log({watchId})
+        console.log({ watchId });
 
-      if (!userMarker) {
-        userMarker = new UserMarker(userLocation, map);
-      } else {
-        userMarker.updatePosition(userLocation);
-      }
+        if (!userMarker) {
+          userMarker = new UserMarker(userLocation, map);
+        } else {
+          userMarker.updatePosition(userLocation);
+        }
 
-      checkDistanceToActiveMarker(userLocation);
-    },
-    (error) => {
-      console.error('watchPosition error:', error);
-    },
-    { enableHighAccuracy: true });
-  }
+        checkDistanceToActiveMarker(userLocation);
+      },
+      (error) => {
+        console.error("watchPosition error:", error);
+      },
+      { enableHighAccuracy: true }
+    );
+  };
 
   const checkDistanceToActiveMarker = (userLocation: google.maps.LatLng) => {
     const activeMarker = markers[activeStep - 1];
     if (activeMarker) {
       const activeMarkerLocation = activeMarker.getPosition();
       if (!hasActiveStepReached && activeMarkerLocation) {
-        const distance = google.maps.geometry.spherical.computeDistanceBetween(userLocation, activeMarkerLocation);
+        const distance = google.maps.geometry.spherical.computeDistanceBetween(
+          userLocation,
+          activeMarkerLocation
+        );
         if (distance <= 10) {
           areTourDetailsExpanded.set(true);
           hasActiveStepReached = true;
+          let isARSeen = sessionStorage.getItem("isARSeen");
+          if (!isARSeen) {
+            isShowARGuide.set(true);
+          }
         }
       }
     }
-  }
+  };
 
   const setMarkerColor = (marker: google.maps.Marker, index: number) => {
     const isActive = activeStep === index + 1;
@@ -115,9 +139,9 @@
       scale: 15,
       fillColor: color,
       fillOpacity: 1,
-      strokeWeight: 0
+      strokeWeight: 0,
     });
-  }
+  };
 
   const loadMarkersAndDrawRoute = (map: google.maps.Map) => {
     sortedTourSteps.forEach((step, index) => {
@@ -127,24 +151,24 @@
         title: `Step ${index + 1}`,
         label: {
           text: `${index + 1}`, // Label text
-          color: "#FFFFFF", 
+          color: "#FFFFFF",
           fontSize: "14px",
           fontWeight: "bold",
         },
       });
 
-      setMarkerColor(marker, index); 
-      marker.addListener('click', () => onMarkerClick(marker, index))
+      setMarkerColor(marker, index);
+      marker.addListener("click", () => onMarkerClick(marker, index));
       markers.push(marker); // Store marker for later use
     });
 
     if (navigator.geolocation) {
       drawUserMarkerAndUpdateLocation();
     }
-  }
+  };
 
   const clearComponent = () => {
-    console.log('unmounting')
+    console.log("unmounting");
 
     if (watchId) {
       navigator.geolocation.clearWatch(watchId);
@@ -157,11 +181,11 @@
     }
 
     if (window.DeviceOrientationEvent) {
-      window.removeEventListener('deviceorientation', handleDeviceOrientation);
+      window.removeEventListener("deviceorientation", handleDeviceOrientation);
     }
 
     // Remove event listeners with the stored handler reference
-    window.removeEventListener('message', messageHandler);
+    window.removeEventListener("message", messageHandler);
 
     // Reset arrays and variables
     markers = [];
@@ -173,10 +197,10 @@
 
   const finishTour = () => {
     isTourStarted.set(false);
-  }
+  };
 
   const sortTourStepsByUserLocation = (userLocation: google.maps.LatLng) => {
-    console.log({tourSteps})
+    console.log({ tourSteps });
     return tourSteps.sort((a, b) => {
       const distanceA = google.maps.geometry.spherical.computeDistanceBetween(
         userLocation,
@@ -192,16 +216,16 @@
 
   const removeARFrame = (event: MessageEvent) => {
     const eventData = event.data;
-    if (eventData.action === 'exitAR') {
+    if (eventData.action === "exitAR") {
       isARActive.set(false);
     }
-  }
+  };
 
   onMount(() => {
-    console.log('on mount!!')
+    console.log("on mount!!");
     loadScript(googleMapsUrl, async () => {
-      console.log('script loaded')
-      map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+      console.log("script loaded");
+      map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
         center: defaultLocation,
         zoom: 18,
         mapTypeControl: false,
@@ -209,14 +233,14 @@
         streetViewControl: false,
         styles: [
           {
-            featureType: 'poi',
+            featureType: "poi",
             stylers: [
               {
-                visibility: 'off'
-              }
-            ]
-          }
-        ]
+                visibility: "off",
+              },
+            ],
+          },
+        ],
       });
 
       directionsService = new google.maps.DirectionsService();
@@ -259,31 +283,34 @@
       });
       userPathDirectionsRenderer.setMap(map);
 
-      const module = await import('$lib/classes/UserMarker');
+      const module = await import("$lib/classes/UserMarker");
       UserMarker = module.UserMarker;
 
-      console.log({UserMarker})
+      console.log({ UserMarker });
 
       if (window.DeviceOrientationEvent) {
-        window.addEventListener('deviceorientation', handleDeviceOrientation);
+        window.addEventListener("deviceorientation", handleDeviceOrientation);
       }
 
       setTimeout(() => {
-        console.log('timeout')
-        console.log(navigator.geolocation)
+        console.log("timeout");
+        console.log(navigator.geolocation);
         if (navigator.geolocation) {
-          console.log('geolocation available')
+          console.log("geolocation available");
           navigator.geolocation.getCurrentPosition(
             (position) => {
-              console.log('position acquired', position)
-              const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-              console.log('userLocation:', userLocation)
-              sortedTourSteps = sortTourStepsByUserLocation(userLocation); 
+              console.log("position acquired", position);
+              const userLocation = new google.maps.LatLng(
+                position.coords.latitude,
+                position.coords.longitude
+              );
+              console.log("userLocation:", userLocation);
+              sortedTourSteps = sortTourStepsByUserLocation(userLocation);
               loadMarkersAndDrawRoute(map);
               drawUserMarkerAndUpdateLocation();
             },
             (error) => {
-              console.error('getCurrentPosition error:', error);
+              console.error("getCurrentPosition error:", error);
               // Fallback: Just load markers if we can't get user position
               sortedTourSteps = tourSteps;
               loadMarkersAndDrawRoute(map);
@@ -291,32 +318,52 @@
             { enableHighAccuracy: false, timeout: 3000, maximumAge: 0 }
           );
         } else {
-          console.log('no geolocation')
+          console.log("no geolocation");
           // Fallback if no geolocation
           sortedTourSteps = tourSteps;
           loadMarkersAndDrawRoute(map);
         }
-      }, 1000)
+      }, 1000);
     });
 
-    window.addEventListener('message', messageHandler);
+    window.addEventListener("message", messageHandler);
+
+    let isTourSeen = sessionStorage.getItem("isTourSeen");
+    if (!isTourSeen) {
+      isTourShowGuide.set(true);
+    }
 
     return () => {
       clearComponent();
-    }
-  })
+    };
+  });
 </script>
 
 <div id="map" class="h-full w-full"></div>
 {#if !$areTourDetailsExpanded}
-  <button class="absolute top-10 right-6" on:click={finishTour}><img src="/Close_Button.png" alt="Close button" /></button>
+  <button class="absolute top-10 right-6" on:click={finishTour}
+    ><img src="/Close_Button.png" alt="Close button" /></button
+  >
 {/if}
 {#if sortedTourSteps.length > 0}
   {#if hasActiveStepReached && activeStep < sortedTourSteps.length}
-    <button on:click={handleNextStepButton} class="absolute top-[68%] left-1/2 -translate-x-[50%] bg-white font-bold rounded-full p-[10px] gap-2 flex shadow-md"><img src="/Travel_Icon.svg" alt="travel icon"/>Go to point {activeStep + 1}</button>
+    <button
+      on:click={handleNextStepButton}
+      class="absolute top-[68%] left-1/2 -translate-x-[50%] bg-white font-bold rounded-full p-[10px] gap-2 flex shadow-md"
+      ><img src="/Travel_Icon.svg" alt="travel icon" />Go to point {activeStep +
+        1}</button
+    >
   {/if}
-  <TourSteps tourSteps={sortedTourSteps} {title} {activeStep} {hasActiveStepReached}/>
+
+  <FirstTimeTourGuide />
+  <ARTourGuide />
+  <TourSteps
+    tourSteps={sortedTourSteps}
+    {title}
+    {activeStep}
+    {hasActiveStepReached}
+  />
 {/if}
 {#if $isARActive}
-  <ARFrame url={$activeARURL}/>
+  <ARFrame url={$activeARURL} />
 {/if}

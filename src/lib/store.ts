@@ -14,6 +14,8 @@ export const isARActive = writable(false);
 export const activeARURL = writable("");
 export const isPageScrolled = writable(false);
 export const isAcknowledgementVisible = writable(false);
+export const isTourShowGuide = writable(false);
+export const isShowARGuide = writable(false);
 export const hasAcknowledgementBeenSeen = writable(false);
 
 export function setTargetLocation(location: Location) {
