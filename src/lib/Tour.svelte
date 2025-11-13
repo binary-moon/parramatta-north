@@ -144,6 +144,7 @@
   };
 
   const loadMarkersAndDrawRoute = (map: google.maps.Map) => {
+    const bounds = new google.maps.LatLngBounds();
     sortedTourSteps.forEach((step, index) => {
       let marker = new google.maps.Marker({
         position: step.location,
@@ -160,7 +161,16 @@
       setMarkerColor(marker, index);
       marker.addListener("click", () => onMarkerClick(marker, index));
       markers.push(marker); // Store marker for later use
+
+      // Extend bounds for each marker
+      const pos = marker.getPosition();
+      if (pos) {
+        bounds.extend(pos);
+      }
     });
+
+    // Fit map to bounds after all markers are added
+    map.fitBounds(bounds);
 
     if (navigator.geolocation) {
       drawUserMarkerAndUpdateLocation();
