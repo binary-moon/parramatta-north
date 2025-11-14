@@ -78,6 +78,7 @@ export const load = (async ({ fetch }) => {
         componentType: "PrimaryPromo",
         raw: primaryTour,
         props: {
+          id: primaryTour?.id,
           title: primaryTour?.title?.rendered,
           subtitle: primaryTour?.acf?.excerpt,
           image: primaryTour?.acf?.image,
