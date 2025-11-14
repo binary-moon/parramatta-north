@@ -5,6 +5,7 @@
 
   export let data;
   const { events: whatsOns } = data;
+  console.log('Hi')
 </script>
   
 <div class="flex flex-col gap-6 pt-16 pb-6 -mt-8 relative">
