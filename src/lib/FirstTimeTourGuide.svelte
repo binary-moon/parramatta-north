@@ -133,7 +133,7 @@
                     alt="this is associated to first time tour guide"
                   />
                   <p class="text-xl mt-4">
-                    Tap blue dot marks your current location and direction on
+                    The blue dot marks your current location and direction on
                     the map
                   </p>
                 </div>
