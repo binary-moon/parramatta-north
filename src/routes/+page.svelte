@@ -7,6 +7,8 @@
 
   let components = {};
 
+  console.log('v1');
+
   export let data;
   const { pageData } = data;
 
