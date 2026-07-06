@@ -75,7 +75,14 @@
     // Update active step or any other callback action
     activeStep = index + 1;
     markers = markers.slice(); // Force reactivity
-    hasActiveStepReached = false;
+    // Tapping a dot simulates arrival so its content unlocks without being
+    // physically present. Mirror the side effects of checkDistanceToActiveMarker.
+    hasActiveStepReached = true;
+    areTourDetailsExpanded.set(true);
+    const isARSeen = sessionStorage.getItem("isARSeen");
+    if (!isARSeen) {
+      isShowARGuide.set(true);
+    }
   };
 
   const handleNextStepButton = () => {
