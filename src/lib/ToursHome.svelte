@@ -8,8 +8,8 @@
   export let moreLink: string;
   export let items: ICard[];
 </script>
-<div class="relative pt-12 pb-6">
+<div class="relative pt-4 pb-6">
   <SectionTitle {title} {moreLink} />
   <CardCarousel {items} />
-  <img class="absolute top-4 left-0" src="/Tours_Deco.svg" alt="decoration"/>
+  <img class="absolute -top-0 left-0 -z-10" src="/Tours_Deco.svg" alt="decoration"/>
 </div>

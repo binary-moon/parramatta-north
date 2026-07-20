@@ -12,7 +12,7 @@
   export let href: string = "/";
 </script>
 
-<div class="px-6 relative pb-12 pt-32 -mt-32">
+<div class="px-6 relative pb-4 pt-24 -mt-32">
   <!-- WIP id 385-->
   {#if id !== 385}
     <Card {tags} {title} {subtitle} {image} {href} isLargeTitle />
